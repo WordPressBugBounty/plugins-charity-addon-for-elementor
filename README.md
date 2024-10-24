@@ -1,0 +1,1 @@
+# plugins-charity-addon-for-elementor
