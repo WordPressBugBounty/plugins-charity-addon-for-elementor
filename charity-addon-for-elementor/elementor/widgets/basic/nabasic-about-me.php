@@ -917,74 +917,73 @@ class Charity_Elementor_Addon_AboutMe extends Widget_Base{
 	 * Written in PHP and used to generate the final HTML.
 	*/
 	protected function render() {
-		$settings = $this->get_settings_for_display();
-		$aboutme_image = !empty( $settings['aboutme_image']['id'] ) ? $settings['aboutme_image']['id'] : '';
-		$aboutme_title = !empty( $settings['aboutme_title'] ) ? $settings['aboutme_title'] : '';
-		$aboutme_title_link = !empty( $settings['aboutme_title_link']['url'] ) ? $settings['aboutme_title_link']['url'] : '';
-		$aboutme_title_link_external = !empty( $settings['aboutme_title_link']['is_external'] ) ? 'target="_blank"' : '';
-		$aboutme_title_link_nofollow = !empty( $settings['aboutme_title_link']['nofollow'] ) ? 'rel="nofollow"' : '';
-		$aboutme_title_link_attr = !empty( $aboutme_title_link ) ?  $aboutme_title_link_external.' '.$aboutme_title_link_nofollow : '';
-		$aboutme_subtitle = !empty( $settings['aboutme_subtitle'] ) ? $settings['aboutme_subtitle'] : '';
-		$aboutme_content = !empty( $settings['aboutme_content'] ) ? $settings['aboutme_content'] : '';
-		$aboutme_btn_text = !empty( $settings['aboutme_btn_text'] ) ? $settings['aboutme_btn_text'] : '';
-		$btn_icon         = !empty( $settings['btn_icon'] ) ? $settings['btn_icon'] : '';
-		$icon = $btn_icon ? ' <i class="'.$btn_icon.'" aria-hidden="true"></i>' : '';
-		$aboutme_btn_link = !empty( $settings['aboutme_btn_link']['url'] ) ? $settings['aboutme_btn_link']['url'] : '';
-		$aboutme_btn_link_external = !empty( $settings['aboutme_btn_link']['is_external'] ) ? 'target="_blank"' : '';
-		$aboutme_btn_link_nofollow = !empty( $settings['aboutme_btn_link']['nofollow'] ) ? 'rel="nofollow"' : '';
-		$aboutme_btn_link_attr = !empty( $aboutme_btn_link ) ?  $aboutme_btn_link_external.' '.$aboutme_btn_link_nofollow : '';
-		$listItems_groups = !empty( $settings['listItems_groups'] ) ? $settings['listItems_groups'] : '';
-		$toggle_align = !empty( $settings['toggle_align'] ) ? $settings['toggle_align'] : '';
-		$aboutme_sign_image = !empty( $settings['aboutme_sign_image']['id'] ) ? $settings['aboutme_sign_image']['id'] : '';
+	    $settings = $this->get_settings_for_display();
+	    $aboutme_image = !empty($settings['aboutme_image']['id']) ? $settings['aboutme_image']['id'] : '';
+	    $aboutme_title = !empty($settings['aboutme_title']) ? $settings['aboutme_title'] : '';
+	    $aboutme_title_link = !empty($settings['aboutme_title_link']['url']) ? $settings['aboutme_title_link']['url'] : '';
+	    $aboutme_title_link_external = !empty($settings['aboutme_title_link']['is_external']) ? 'target="_blank"' : '';
+	    $aboutme_title_link_nofollow = !empty($settings['aboutme_title_link']['nofollow']) ? 'rel="nofollow"' : '';
+	    $aboutme_title_link_attr = !empty($aboutme_title_link) ? $aboutme_title_link_external . ' ' . $aboutme_title_link_nofollow : '';
+	    $aboutme_subtitle = !empty($settings['aboutme_subtitle']) ? $settings['aboutme_subtitle'] : '';
+	    $aboutme_content = !empty($settings['aboutme_content']) ? $settings['aboutme_content'] : '';
+	    $aboutme_btn_text = !empty($settings['aboutme_btn_text']) ? $settings['aboutme_btn_text'] : '';
+	    $btn_icon = !empty($settings['btn_icon']) ? $settings['btn_icon'] : '';
+	    $icon = $btn_icon ? ' <i class="' . esc_attr($btn_icon) . '" aria-hidden="true"></i>' : '';
+	    $aboutme_btn_link = !empty($settings['aboutme_btn_link']['url']) ? $settings['aboutme_btn_link']['url'] : '';
+	    $aboutme_btn_link_external = !empty($settings['aboutme_btn_link']['is_external']) ? 'target="_blank"' : '';
+	    $aboutme_btn_link_nofollow = !empty($settings['aboutme_btn_link']['nofollow']) ? 'rel="nofollow"' : '';
+	    $aboutme_btn_link_attr = !empty($aboutme_btn_link) ? $aboutme_btn_link_external . ' ' . $aboutme_btn_link_nofollow : '';
+	    $listItems_groups = !empty($settings['listItems_groups']) ? $settings['listItems_groups'] : '';
+	    $toggle_align = !empty($settings['toggle_align']) ? $settings['toggle_align'] : '';
+	    $aboutme_sign_image = !empty($settings['aboutme_sign_image']['id']) ? $settings['aboutme_sign_image']['id'] : '';
 
-		if ($toggle_align) {
-			$f_class = ' order-1';
-			$s_class = ' order-2';
-		} else {
-			$f_class = '';
-			$s_class = '';
-		}
+	    if ($toggle_align) {
+	        $f_class = ' order-1';
+	        $s_class = ' order-2';
+	    } else {
+	        $f_class = '';
+	        $s_class = '';
+	    }
 
-		// Image
-		$image_url = wp_get_attachment_url( $aboutme_image );
-		$image = $image_url ? '<div class="nacep-image"><img src="'.esc_url($image_url).'" alt="'.esc_attr($aboutme_title).'"></div>' : '';
+	    // Image
+	    $image_url = wp_get_attachment_url($aboutme_image);
+	    $image = $image_url ? '<div class="nacep-image"><img src="' . esc_url($image_url) . '" alt="' . esc_attr($aboutme_title) . '"></div>' : '';
 
-		$sign_url = wp_get_attachment_url( $aboutme_sign_image );
-		$sign_image = $sign_url ? '<div class="sign-image"><img src="'.esc_url($sign_url).'" alt="'.esc_attr($aboutme_title).'"></div>' : '';
+	    $sign_url = wp_get_attachment_url($aboutme_sign_image);
+	    $sign_image = $sign_url ? '<div class="sign-image"><img src="' . esc_url($sign_url) . '" alt="' . esc_attr($aboutme_title) . '"></div>' : '';
 
-		$title_link = $aboutme_title_link ? '<a href="'.esc_url($aboutme_title_link).'" '.$aboutme_title_link_attr.'>'.esc_html($aboutme_title).'</a>' : esc_html($aboutme_title);
-		$title = $aboutme_title ? '<h3 class="aboutme-title">'.$title_link.'</h3>' : '';
-		$subtitle = $aboutme_subtitle ? '<h5>'.esc_html($aboutme_subtitle).'</h5>' : '';
-		$content = $aboutme_content ? $aboutme_content : '';
-		$aboutme_btn = $aboutme_btn_link ? '<div class="nacep-btn-wrap"><a href="'.esc_url($aboutme_btn_link).'" class="nacep-btn" '.$aboutme_btn_link_attr.'>'.esc_html($aboutme_btn_text).$icon.'</a></div>' : '';
+	    $title_link = $aboutme_title_link ? '<a href="' . esc_url($aboutme_title_link) . '" ' . $aboutme_title_link_attr . '>' . esc_html($aboutme_title) . '</a>' : esc_html($aboutme_title);
+	    $title = $aboutme_title ? '<h3 class="aboutme-title">' . $title_link . '</h3>' : '';
+	    $subtitle = $aboutme_subtitle ? '<h5>' . esc_html($aboutme_subtitle) . '</h5>' : '';
+	    $content = $aboutme_content ? wp_kses_post($aboutme_content) : ''; // Use wp_kses_post for content
+	    $aboutme_btn = $aboutme_btn_link ? '<div class="nacep-btn-wrap"><a href="' . esc_url($aboutme_btn_link) . '" class="nacep-btn" ' . $aboutme_btn_link_attr . '>' . esc_html($aboutme_btn_text) . $icon . '</a></div>' : '';
 
-		$output = '<div class="nacep-aboutme-item">
-								<div class="aboutme-image'.esc_attr($s_class).'">'.$image.'</div>
-								<div class="aboutme-info'.esc_attr($f_class).'"><div class="aboutme-info-wrap">
-									'.$subtitle.$title;
-									// Group Param Output
-									if ( is_array( $listItems_groups ) && !empty( $listItems_groups ) ){
-										$output .= '<div class="nacep-social rounded">';
-									  foreach ( $listItems_groups as $each_list ) {
-									  $icon_link = !empty( $each_list['icon_link'] ) ? $each_list['icon_link'] : '';
+	    $output = '<div class="nacep-aboutme-item">
+	                    <div class="aboutme-image' . esc_attr($s_class) . '">' . $image . '</div>
+	                    <div class="aboutme-info' . esc_attr($f_class) . '"><div class="aboutme-info-wrap">
+	                        ' . $subtitle . $title;
+	    // Group Param Output
+	    if (is_array($listItems_groups) && !empty($listItems_groups)) {
+	        $output .= '<div class="nacep-social rounded">';
+	        foreach ($listItems_groups as $each_list) {
+	            $icon_link = !empty($each_list['icon_link']) ? $each_list['icon_link'] : '';
 
-										$link_url = !empty( $icon_link['url'] ) ? esc_url($icon_link['url']) : '';
-										$link_external = !empty( $icon_link['is_external'] ) ? 'target="_blank"' : '';
-										$link_nofollow = !empty( $icon_link['nofollow'] ) ? 'rel="nofollow"' : '';
-										$link_attr = !empty( $icon_link['url'] ) ?  $link_external.' '.$link_nofollow : '';
+	            $link_url = !empty($icon_link['url']) ? esc_url($icon_link['url']) : '';
+	            $link_external = !empty($icon_link['is_external']) ? 'target="_blank"' : '';
+	            $link_nofollow = !empty($icon_link['nofollow']) ? 'rel="nofollow"' : '';
+	            $link_attr = !empty($icon_link['url']) ? $link_external . ' ' . $link_nofollow : '';
 
-									  $social_icon = !empty( $each_list['social_icon'] ) ? $each_list['social_icon'] : '';
-										$icon = $social_icon ? '<i class="'.esc_attr($social_icon).'" aria-hidden="true"></i>' : '';
+	            $social_icon = !empty($each_list['social_icon']) ? $each_list['social_icon'] : '';
+	            $icon = $social_icon ? '<i class="' . esc_attr($social_icon) . '" aria-hidden="true"></i>' : '';
 
-									  $output .= '<a href="'.esc_url($link_url).'" '.$link_attr.'>'.$icon.'</a>';
-										}
-										$output .= '</div>';
-									}
-		$output .= $content.$aboutme_btn.$sign_image.'</div>
-							</div>
-						</div>';
-		echo $output;
-
+	            $output .= '<a href="' . esc_url($link_url) . '" ' . $link_attr . '>' . $icon . '</a>';
+	        }
+	        $output .= '</div>';
+	    }
+	    $output .= $content . $aboutme_btn . $sign_image . '</div>
+	                </div>
+	            </div>';
+	    echo $output;
 	}
 
 }

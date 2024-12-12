@@ -762,54 +762,49 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 		 * Written in PHP and used to generate the final HTML.
 		*/
 		protected function render() {
-			$settings = $this->get_settings_for_display();
+		    $settings = $this->get_settings_for_display();
 
-			$forms_per_page 	= !empty( $settings['forms_per_page'] ) ? $settings['forms_per_page'] : '';
-			$ids 				= !empty( $settings['ids'] ) ? $settings['ids'] : '';
-			$exclude 				= !empty( $settings['exclude'] ) ? $settings['exclude'] : '';
-			$orderby 	= !empty( $settings['orderby'] ) ? $settings['orderby'] : '';
-			$order 		= !empty( $settings['order'] ) ? $settings['order'] : '';
-			$columns 	= !empty( $settings['columns'] ) ? $settings['columns'] : '';
-			$show_goal 	= !empty( $settings['show_goal'] ) ? $settings['show_goal'] : '';
-			$show_excerpt 	= !empty( $settings['show_excerpt'] ) ? $settings['show_excerpt'] : '';
-			$show_featured_image 		= !empty( $settings['show_featured_image'] ) ? $settings['show_featured_image'] : '';
-			$display_style = !empty( $settings['display_style'] ) ? $settings['display_style'] : '';
-			$categories 				= !empty( $settings['categories'] ) ? $settings['categories'] : '';
-			$tags 				= !empty( $settings['tags'] ) ? $settings['tags'] : '';
-			$paged 				= !empty( $settings['paged'] ) ? $settings['paged'] : '';
-			$show_title 				= !empty( $settings['show_title'] ) ? $settings['show_title'] : '';
-			$image_size 				= !empty( $settings['image_size'] ) ? $settings['image_size'] : '';
-			$image_height 				= !empty( $settings['image_height'] ) ? $settings['image_height'] : '';
-			$excerpt_length 				= !empty( $settings['excerpt_length'] ) ? $settings['excerpt_length'] : '';
+		    $forms_per_page = !empty($settings['forms_per_page']) ? $settings['forms_per_page'] : '';
+		    $ids = !empty($settings['ids']) ? $settings['ids'] : '';
+		    $exclude = !empty($settings['exclude']) ? $settings['exclude'] : '';
+		    $orderby = !empty($settings['orderby']) ? $settings['orderby'] : '';
+		    $order = !empty($settings['order']) ? $settings['order'] : '';
+		    $columns = !empty($settings['columns']) ? $settings['columns'] : '';
+		    $show_goal = !empty($settings['show_goal']) ? $settings['show_goal'] : '';
+		    $show_excerpt = !empty($settings['show_excerpt']) ? $settings['show_excerpt'] : '';
+		    $show_featured_image = !empty($settings['show_featured_image']) ? $settings['show_featured_image'] : '';
+		    $display_style = !empty($settings['display_style']) ? $settings['display_style'] : '';
+		    $categories = !empty($settings['categories']) ? $settings['categories'] : '';
+		    $tags = !empty($settings['tags']) ? $settings['tags'] : '';
+		    $paged = !empty($settings['paged']) ? $settings['paged'] : '';
+		    $show_title = !empty($settings['show_title']) ? $settings['show_title'] : '';
+		    $image_size = !empty($settings['image_size']) ? $settings['image_size'] : '';
+		    $image_height = !empty($settings['image_height']) ? $settings['image_height'] : '';
+		    $excerpt_length = !empty($settings['excerpt_length']) ? $settings['excerpt_length'] : '';
 
-			$show_goal = $show_goal ? 'true' : 'false';
-			$show_excerpt = $show_excerpt ? 'true' : 'false';
-			$show_featured_image = $show_featured_image ? 'true' : 'false';
-			$paged = $paged ? 'true' : 'false';
-			$show_title = $show_title ? 'true' : 'false';
+		    $forms_per_page = $forms_per_page ? ' forms_per_page="' . esc_attr($forms_per_page) . '"' : '';
+		    $ids = $ids ? ' ids="' . esc_attr(implode(',', $ids)) . '"' : '';
+		    $exclude = $exclude ? ' exclude="' . esc_attr(implode(',', $exclude)) . '"' : '';
+		    $orderby = $orderby ? ' orderby="' . esc_attr($orderby) . '"' : '';
+		    $order = $order ? ' order="' . esc_attr($order) . '"' : '';
+		    $columns = $columns ? ' columns="' . esc_attr($columns) . '"' : '';
+		    $show_goal = $show_goal ? ' show_goal="' . esc_attr($show_goal) . '"' : '';
+		    $show_excerpt = $show_excerpt ? ' show_excerpt="' . esc_attr($show_excerpt) . '"' : '';
+		    $show_featured_image = $show_featured_image ? ' show_featured_image="' . esc_attr($show_featured_image) . '"' : '';
+		    $display_style = $display_style ? ' display_style="' . esc_attr($display_style) . '"' : '';
+		    $categories = $categories ? ' cats="' . esc_attr(implode(',', $categories)) . '"' : '';
+		    $tags = $tags ? ' tags="' . esc_attr(implode(',', $tags)) . '"' : '';
+		    $paged = $paged ? ' paged="' . esc_attr($paged) . '"' : '';
+		    $show_title = $show_title ? ' show_title="' . esc_attr($show_title) . '"' : '';
+		    $image_size = $image_size ? ' image_size="' . esc_attr($image_size) . '"' : '';
+		    $image_height = $image_height ? ' image_height="' . esc_attr($image_height) . 'px"' : '';
+		    $excerpt_length = $excerpt_length ? ' excerpt_length="' . esc_attr($excerpt_length) . '"' : '';
 
-			$forms_per_page  = $forms_per_page ? ' forms_per_page="'.$forms_per_page.'"' : '';
-			$ids 					   = $ids ? ' ids="'.implode(',', $ids).'"' : '';
-			$exclude 				 = $exclude ? ' exclude="'.implode(',', $exclude).'"' : '';
-			$orderby 				 = $orderby ? ' orderby="'.$orderby.'"' : '';
-			$order 					 = $order ? ' order="'.$order.'"' : '';
-			$columns 				 = $columns ? ' columns="'.$columns.'"' : '';
-			$show_goal 	 		 = $show_goal ? ' show_goal="'.$show_goal.'"' : '';
-			$show_excerpt 	 = $show_excerpt ? ' show_excerpt="'.$show_excerpt.'"' : '';
-			$show_featured_image 		 = $show_featured_image ? ' show_featured_image="'.$show_featured_image.'"' : '';
-			$display_style   = $display_style ? ' display_style="'.$display_style.'"' : '';
-			$categories 		 = $categories ? ' cats="'.implode(',', $categories).'"' : '';
-			$tags 					 = $tags ? ' tags="'.implode(',', $tags).'"' : '';
-			$paged 	 		 = $paged ? ' paged="'.$paged.'"' : '';
-			$show_title 	 		 = $show_title ? ' show_title="'.$show_title.'"' : '';
-			$image_size 	 		 = $image_size ? ' image_size="'.$image_size.'"' : '';
-			$image_height 	 		 = $image_height ? ' image_height="'.$image_height.'px"' : '';
-			$excerpt_length 	 		 = $excerpt_length ? ' excerpt_length="'.$excerpt_length.'"' : '';
+		    $output = '<div class="nacep-give-grid">'
+		        . do_shortcode('[give_form_grid' . $forms_per_page . $ids . $exclude . $categories . $tags . $orderby . $order . $columns . $show_goal . $show_excerpt . $show_featured_image . $display_style . $paged . $show_title . $image_size . $image_height . $excerpt_length . ']')
+		        . '</div>';
 
-	  	$output = '<div class="nacep-give-grid">'.do_shortcode( '[give_form_grid '. $forms_per_page . $ids . $exclude . $categories . $tags . $orderby . $order . $columns . $show_goal . $show_excerpt . $show_featured_image . $display_style . $paged . $show_title . $image_size . $image_height . $excerpt_length .']' ).'</div>';
-
-		  echo $output;
-
+		    echo wp_kses_post($output);
 		}
 
 	}

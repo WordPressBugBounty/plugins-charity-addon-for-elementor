@@ -313,28 +313,30 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 		 * Written in PHP and used to generate the final HTML.
 		*/
 		protected function render() {
-			$settings = $this->get_settings_for_display();
-			$ids 				= !empty( $settings['ids'] ) ? $settings['ids'] : '';
-			$total_goal 	= !empty( $settings['total_goal'] ) ? $settings['total_goal'] : '';
-			$message 		= !empty( $settings['message'] ) ? $settings['message'] : '';
-			$link 	= !empty( $settings['link'] ) ? $settings['link'] : '';
-			$link_text 	= !empty( $settings['link_text'] ) ? $settings['link_text'] : '';
-			$progress_bar 	= !empty( $settings['progress_bar'] ) ? $settings['progress_bar'] : '';
+		    $settings = $this->get_settings_for_display();
+		    $ids = !empty($settings['ids']) ? $settings['ids'] : '';
+		    $total_goal = !empty($settings['total_goal']) ? $settings['total_goal'] : '';
+		    $message = !empty($settings['message']) ? $settings['message'] : '';
+		    $link = !empty($settings['link']) ? $settings['link'] : '';
+		    $link_text = !empty($settings['link_text']) ? $settings['link_text'] : '';
+		    $progress_bar = !empty($settings['progress_bar']) ? $settings['progress_bar'] : '';
 
-			$progress_bar = $progress_bar ? 'true' : 'false';
+		    $progress_bar = $progress_bar ? 'true' : 'false';
 
-			$ids 					 = $ids ? ' ids="'.implode(',', $ids).'"' : '';
-			$total_goal 				 = $total_goal ? ' total_goal="'.$total_goal.'"' : '';
-			$message 					 = $message ? ' message="'.$message.'"' : '';
-			$link 				 = $link ? ' link="'.$link.'"' : '';
-			$link_text 	 = $link_text ? ' link_text="'.$link_text.'"' : '';
-			$progress_bar 	 = $progress_bar ? ' progress_bar="'.$progress_bar.'"' : '';
+		    $ids = !empty($ids) ? ' ids="' . esc_attr(implode(',', $ids)) . '"' : '';
+		    $total_goal = !empty($total_goal) ? ' total_goal="' . esc_attr($total_goal) . '"' : '';
+		    $message = !empty($message) ? ' message="' . esc_attr($message) . '"' : '';
+		    $link = !empty($link) ? ' link="' . esc_url($link) . '"' : '';
+		    $link_text = !empty($link_text) ? ' link_text="' . esc_attr($link_text) . '"' : '';
+		    $progress_bar = !empty($progress_bar) ? ' progress_bar="' . esc_attr($progress_bar) . '"' : '';
 
-	  	$output = '<div class="nacep-give-totals">'.do_shortcode( '[give_totals '. $ids . $total_goal . $message . $link . $link_text . $progress_bar .']' ).'</div>';
+		    $output = '<div class="nacep-give-totals">'
+		        . do_shortcode('[give_totals' . $ids . $total_goal . $message . $link . $link_text . $progress_bar . ']')
+		        . '</div>';
 
-		  echo $output;
-
+		    echo wp_kses_post($output);
 		}
+
 
 	}
 	Plugin::instance()->widgets_manager->register_widget_type( new Charity_Elementor_Addon_GIVE_Totals() );

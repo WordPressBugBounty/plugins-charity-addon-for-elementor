@@ -1278,11 +1278,11 @@ class Charity_Elementor_Addon_Slider extends Widget_Base{
 
 		// Carousel Data's
 		$carousel_loop = $carousel_loop !== 'true' ? ' data-loop="true"' : ' data-loop="false"';
-		$carousel_autoplay_timeout = $carousel_autoplay_timeout ? ' data-swiper-autoplay='. $carousel_autoplay_timeout .'' : ' data-swiper-autoplay=5000';
-		$carousel_speed = $carousel_speed ? ' data-speed="'. $carousel_speed .'"' : ' data-speed="1000"';
+		$carousel_autoplay_timeout = $carousel_autoplay_timeout ? ' data-swiper-autoplay='. esc_attr($carousel_autoplay_timeout) .'' : ' data-swiper-autoplay=5000';
+		$carousel_speed = $carousel_speed ? ' data-speed="'. esc_attr($carousel_speed) .'"' : ' data-speed="1000"';
 		$carousel_autoplay = $carousel_autoplay ? ' data-autoplay="true"' : ' data-autoplay="false"';
 		$clickable_pagi = $clickable_pagi ? 'data-clickpage="true"' : '';
-		$carousel_effect = (isset($settings['carousel_effect'])) ? ' data-effect="'.$carousel_effect.'"' : '';
+		$carousel_effect = (isset($settings['carousel_effect'])) ? ' data-effect="'.esc_attr($carousel_effect).'"' : '';
 		$carousel_mousedrag = $carousel_mousedrag !== 'true' ? ' data-mousedrag="true"' : ' data-mousedrag="false"';
 
 		$content_entrance_animation = !empty( $settings['content_entrance_animation'] ) ? $settings['content_entrance_animation'] : '';
@@ -1318,7 +1318,7 @@ class Charity_Elementor_Addon_Slider extends Widget_Base{
 
 					$button_text = !empty( $each_item['btn_txt'] ) ? $each_item['btn_txt'] : '';
 					$btn_icon         = !empty( $each_item['btn_icon'] ) ? $each_item['btn_icon'] : '';
-					$icon = $btn_icon ? ' <i class="'.$btn_icon.'" aria-hidden="true"></i>' : '';
+					$icon = $btn_icon ? ' <i class="'.esc_attr( $btn_icon ).'" aria-hidden="true"></i>' : '';
 					$button_link = !empty( $each_item['button_link']['url'] ) ? $each_item['button_link']['url'] : '';
 					$button_link_external = !empty( $each_item['button_link']['is_external'] ) ? 'target="_blank"' : '';
 					$button_link_nofollow = !empty( $each_item['button_link']['nofollow'] ) ? 'rel="nofollow"' : '';
@@ -1326,7 +1326,7 @@ class Charity_Elementor_Addon_Slider extends Widget_Base{
 
 					$button_two_text = !empty( $each_item['btn_two_txt'] ) ? $each_item['btn_two_txt'] : '';
 					$btn_two_icon         = !empty( $each_item['btn_two_icon'] ) ? $each_item['btn_two_icon'] : '';
-					$icon_two = $btn_two_icon ? ' <i class="'.$btn_two_icon.'" aria-hidden="true"></i>' : '';
+					$icon_two = $btn_two_icon ? ' <i class="'.esc_attr( $btn_two_icon ).'" aria-hidden="true"></i>' : '';
 					$button_two_link = !empty( $each_item['button_two_link']['url'] ) ? $each_item['button_two_link']['url'] : '';
 					$button_two_link_external = !empty( $each_item['button_two_link']['is_external'] ) ? 'target="_blank"' : '';
 					$button_two_link_nofollow = !empty( $each_item['button_two_link']['nofollow'] ) ? 'rel="nofollow"' : '';

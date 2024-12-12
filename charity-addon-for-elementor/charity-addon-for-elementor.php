@@ -5,7 +5,7 @@ Plugin URI: https://nicheaddons.com/demos/charity
 Description: Charity Addon for Elementor covers all the must-needed elements for creating a perfect Charity website using Elementor Page Builder. 30+ Unique & Basic Elementor widget covers all of the Charity elements. Including getting a list of donation posts from most popular Charity WordPress plugins. Like, Causes, Campaigns, Countdown, Donors, Donation Form, Donation History, and Donate Buttons.
 Author: NicheAddons
 Author URI: https://nicheaddons.com/
-Version: 1.3.2
+Version: 1.3.3
 Text Domain: charity-addon-for-elementor
 */
 

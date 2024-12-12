@@ -636,52 +636,38 @@ if ( !is_plugin_active( 'charity-addon-for-elementor-pro/charity-addon-for-eleme
 		protected function render() {
 			// Testimonials query
 			$settings = $this->get_settings_for_display();
-			$center_item = !empty( $settings['center_item'] ) ? $settings['center_item'] : '';
-			$info_position = !empty( $settings['info_position'] ) ? $settings['info_position'] : '';
-			$testimonials_image = !empty( $settings['testimonials_image']['id'] ) ? $settings['testimonials_image']['id'] : '';
-			$testimonials_icon = !empty( $settings['testimonials_icon'] ) ? $settings['testimonials_icon'] : '';
-			$testimonials_title = !empty( $settings['testimonials_title'] ) ? $settings['testimonials_title'] : '';
+			$center_item = !empty( $settings['center_item'] ) ? esc_attr($settings['center_item']) : '';
+			$info_position = !empty( $settings['info_position'] ) ? esc_attr($settings['info_position']) : '';
+			$testimonials_image = !empty( $settings['testimonials_image']['id'] ) ? intval($settings['testimonials_image']['id']) : '';
+			$testimonials_icon = !empty( $settings['testimonials_icon'] ) ? esc_attr($settings['testimonials_icon']) : '';
+			$testimonials_title = !empty( $settings['testimonials_title'] ) ? esc_html($settings['testimonials_title']) : '';
 
 			$testimonials_title_link = !empty( $settings['testimonials_title_link'] ) ? $settings['testimonials_title_link'] : '';
 			$link_url = !empty( $testimonials_title_link['url'] ) ? esc_url($testimonials_title_link['url']) : '';
 			$link_external = !empty( $testimonials_title_link['is_external'] ) ? 'target="_blank"' : '';
 			$link_nofollow = !empty( $testimonials_title_link['nofollow'] ) ? 'rel="nofollow"' : '';
-			$link_attr = !empty( $testimonials_title_link['url'] ) ?  $link_external.' '.$link_nofollow : '';
+			$link_attr = !empty( $testimonials_title_link['url'] ) ? esc_attr($link_external . ' ' . $link_nofollow) : '';
 
-			$testimonials_designation = !empty( $settings['testimonials_designation'] ) ? $settings['testimonials_designation'] : '';
-			$testimonials_content = !empty( $settings['testimonials_content'] ) ? $settings['testimonials_content'] : '';
+			$testimonials_designation = !empty( $settings['testimonials_designation'] ) ? esc_html($settings['testimonials_designation']) : '';
+			$testimonials_content = !empty( $settings['testimonials_content'] ) ? esc_html($settings['testimonials_content']) : '';
 
-			if ($info_position === 'top') {
-			  $style_cls = ' info-top';
-			} else {
-			  $style_cls = '';
-			}
+			$style_cls = ($info_position === 'top') ? ' info-top' : '';
+			$center_cls = $center_item ? ' center-item' : '';
 
-			if ($center_item) {
-			  $center_cls = ' center-item';
-			} else {
-			  $center_cls = '';
-			}
+			$title_link = !empty( $link_url ) ? '<a href="'.esc_url($link_url).'" '.$link_attr.'>'.esc_html($testimonials_title).'</a>' : esc_html($testimonials_title);
 
-		  $title_link = !empty( $link_url ) ? '<a href="'.esc_url($link_url).'" '.$link_attr.'>'.esc_html($testimonials_title).'</a>' : esc_html($testimonials_title);
-
-			$title = $testimonials_title ? '<h4 class="customer-name">'.$title_link.'</h4>' : '';
+			$title = $testimonials_title ? '<h4 class="customer-name">'.esc_html($title_link).'</h4>' : '';
 			$designation = $testimonials_designation ? '<h5 class="customer-designation">'.esc_html($testimonials_designation).'</h5>' : '';
 			$content = $testimonials_content ? '<p>'.esc_html($testimonials_content).'</p>' : '';
 
-			if ($info_position === 'top') {
-			  $top_content = '';
-			  $bottom_content = $content;
-			} else {
-			  $top_content = $content;
-			  $bottom_content = '';
-			}
+			$top_content = ($info_position === 'top') ? '' : $content;
+			$bottom_content = ($info_position === 'top') ? $content : '';
 
-			$image_url = wp_get_attachment_url( $testimonials_image );
+			$image_url = wp_get_attachment_url($testimonials_image);
 			$testimonials_image = $image_url ? '<div class="nacep-image"><img src="'.esc_url($image_url).'" alt="'.esc_attr($testimonials_title).'"></div>' : '';
 			$testimonials_icon = $testimonials_icon ? '<div class="nacep-icon"><i class="'.esc_attr($testimonials_icon).'"></i></div>' : '';
 
-			$output = '<div class="nacep-testimonial-item'.$style_cls.$center_cls.'">
+			$output = '<div class="nacep-testimonial-item'.esc_attr($style_cls.$center_cls).'">
 			              '.$testimonials_icon.$top_content.'
 			              <div class="customer-info">
 			                '.$testimonials_image.'
@@ -693,7 +679,6 @@ if ( !is_plugin_active( 'charity-addon-for-elementor-pro/charity-addon-for-eleme
 			            </div>';
 
 			echo $output;
-
 		}
 
 	}

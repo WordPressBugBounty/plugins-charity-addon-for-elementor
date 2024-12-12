@@ -934,130 +934,78 @@ class Charity_Elementor_Addon_Table extends Widget_Base{
 	 * Written in PHP and used to generate the final HTML.
 	*/
 	protected function render() {
-		$settings = $this->get_settings_for_display();
-		$tableItems_title = !empty( $settings['tableItems_title'] ) ? $settings['tableItems_title'] : [];
-		$tableItems_row = !empty( $settings['tableItems_row'] ) ? $settings['tableItems_row'] : [];
+	    $settings = $this->get_settings_for_display();
+	    $tableItems_title = !empty($settings['tableItems_title']) ? $settings['tableItems_title'] : [];
+	    $tableItems_row = !empty($settings['tableItems_row']) ? $settings['tableItems_row'] : [];
 
-	  $output = '<div class="nacep-responsive-table">
-						    <table class="nacep-table">
-						      <thead>
-						        <tr>';
-						        // Group Param Output
-										if ( is_array( $tableItems_title ) && !empty( $tableItems_title ) ){
-										  foreach ( $tableItems_title as $each_title ) {
-												$table_title = $each_title['table_title'] ? $each_title['table_title'] : '';
-											  $output .= '<th>'.$table_title.'</th>';
-										  }
-										}
-       	$output .= '</tr>
-						      </thead>
-						      <tbody>';
-						      	// Group Param Output
-										if ( is_array( $tableItems_row ) && !empty( $tableItems_row ) ){
-										  foreach ( $tableItems_row as $each_row ) {
-											$text_style1 = $each_row['text_style1'] ? $each_row['text_style1'] : '';
-											$text_style2 = $each_row['text_style2'] ? $each_row['text_style2'] : '';
-											$text_style3 = $each_row['text_style3'] ? $each_row['text_style3'] : '';
-											$text_style4 = $each_row['text_style4'] ? $each_row['text_style4'] : '';
-											$text_style5 = $each_row['text_style5'] ? $each_row['text_style5'] : '';
+	    $output = '<div class="nacep-responsive-table">
+	                    <table class="nacep-table">
+	                        <thead>
+	                            <tr>';
+	    // Escaping Group Param Output
+	    if (is_array($tableItems_title) && !empty($tableItems_title)) {
+	        foreach ($tableItems_title as $each_title) {
+	            $table_title = !empty($each_title['table_title']) ? esc_html($each_title['table_title']) : '';
+	            $output .= '<th>' . $table_title . '</th>';
+	        }
+	    }
+	    $output .= '</tr>
+	                        </thead>
+	                        <tbody>';
+	    // Escaping Group Param Output
+	    if (is_array($tableItems_row) && !empty($tableItems_row)) {
+	        foreach ($tableItems_row as $each_row) {
+	            $icon1 = !empty($each_row['icon1']) ? '<i class="' . esc_attr($each_row['icon1']) . '" aria-hidden="true"></i>' : '';
+	            $icon2 = !empty($each_row['icon2']) ? '<i class="' . esc_attr($each_row['icon2']) . '" aria-hidden="true"></i>' : '';
+	            $icon3 = !empty($each_row['icon3']) ? '<i class="' . esc_attr($each_row['icon3']) . '" aria-hidden="true"></i>' : '';
+	            $icon4 = !empty($each_row['icon4']) ? '<i class="' . esc_attr($each_row['icon4']) . '" aria-hidden="true"></i>' : '';
+	            $icon5 = !empty($each_row['icon5']) ? '<i class="' . esc_attr($each_row['icon5']) . '" aria-hidden="true"></i>' : '';
 
-											$icon1 = $each_row['icon1'] ? $each_row['icon1'] : '';
-											$icon1 = $icon1 ? '<i class="'.esc_attr($icon1) .'" aria-hidden="true"></i>' : '';
-											$icon2 = $each_row['icon2'] ? $each_row['icon2'] : '';
-											$icon2 = $icon2 ? '<i class="'.esc_attr($icon2) .'" aria-hidden="true"></i>' : '';
-											$icon3 = $each_row['icon3'] ? $each_row['icon3'] : '';
-											$icon3 = $icon3 ? '<i class="'.esc_attr($icon3) .'" aria-hidden="true"></i>' : '';
-											$icon4 = $each_row['icon4'] ? $each_row['icon4'] : '';
-											$icon4 = $icon4 ? '<i class="'.esc_attr($icon4) .'" aria-hidden="true"></i>' : '';
-											$icon5 = $each_row['icon5'] ? $each_row['icon5'] : '';
-											$icon5 = $icon5 ? '<i class="'.esc_attr($icon5) .'" aria-hidden="true"></i>' : '';
+	            $row_text1 = !empty($each_row['row_text1']) ? esc_html($each_row['row_text1']) : '';
+	            $row_text2 = !empty($each_row['row_text2']) ? esc_html($each_row['row_text2']) : '';
+	            $row_text3 = !empty($each_row['row_text3']) ? esc_html($each_row['row_text3']) : '';
+	            $row_text4 = !empty($each_row['row_text4']) ? esc_html($each_row['row_text4']) : '';
+	            $row_text5 = !empty($each_row['row_text5']) ? esc_html($each_row['row_text5']) : '';
 
-											$row_text1 = $each_row['row_text1'] ? $each_row['row_text1'] : '';
-											$row_text2 = $each_row['row_text2'] ? $each_row['row_text2'] : '';
-											$row_text3 = $each_row['row_text3'] ? $each_row['row_text3'] : '';
-											$row_text4 = $each_row['row_text4'] ? $each_row['row_text4'] : '';
-											$row_text5 = $each_row['row_text5'] ? $each_row['row_text5'] : '';
+	            $button1 = $this->get_button_html($each_row, 'text_link1', $row_text1);
+	            $button2 = $this->get_button_html($each_row, 'text_link2', $row_text2);
+	            $button3 = $this->get_button_html($each_row, 'text_link3', $row_text3);
+	            $button4 = $this->get_button_html($each_row, 'text_link4', $row_text4);
+	            $button5 = $this->get_button_html($each_row, 'text_link5', $row_text5);
 
-											$text_link1 = !empty( $each_row['text_link1']['url'] ) ? $each_row['text_link1']['url'] : '';
-											$text_link1_external = !empty( $each_row['text_link1']['is_external'] ) ? 'target="_blank"' : '';
-											$text_link1_nofollow = !empty( $each_row['text_link1']['nofollow'] ) ? 'rel="nofollow"' : '';
-											$text_link1_attr = !empty( $text_link1 ) ?  $text_link1_external.' '.$text_link1_nofollow : '';
+	            $output .= '<tr>';
+	            $output .= $this->get_table_cell($each_row, 'text_style1', $icon1, $button1, $row_text1);
+	            $output .= $this->get_table_cell($each_row, 'text_style2', $icon2, $button2, $row_text2);
+	            $output .= $this->get_table_cell($each_row, 'text_style3', $icon3, $button3, $row_text3);
+	            $output .= $this->get_table_cell($each_row, 'text_style4', $icon4, $button4, $row_text4);
+	            $output .= $this->get_table_cell($each_row, 'text_style5', $icon5, $button5, $row_text5);
+	            $output .= '</tr>';
+	        }
+	    }
+	    $output .= '</tbody>
+	                    </table>
+	                </div>';
 
-  										$button1 = !empty( $text_link1 ) ? '<a href="'.esc_url($text_link1).'" '.$text_link1_attr.' class="nacep-btn">'.esc_html($row_text1).'</a>' : '';
+	    echo $output;
+	}
 
-											$text_link2 = !empty( $each_row['text_link2']['url'] ) ? $each_row['text_link2']['url'] : '';
-											$text_link2_external = !empty( $each_row['text_link2']['is_external'] ) ? 'target="_blank"' : '';
-											$text_link2_nofollow = !empty( $each_row['text_link2']['nofollow'] ) ? 'rel="nofollow"' : '';
-											$text_link2_attr = !empty( $text_link2 ) ?  $text_link2_external.' '.$text_link2_nofollow : '';
+	private function get_button_html($each_row, $link_key, $text) {
+	    $link_url = !empty($each_row[$link_key]['url']) ? esc_url($each_row[$link_key]['url']) : '';
+	    $link_external = !empty($each_row[$link_key]['is_external']) ? 'target="_blank"' : '';
+	    $link_nofollow = !empty($each_row[$link_key]['nofollow']) ? 'rel="nofollow"' : '';
+	    $link_attr = trim($link_external . ' ' . $link_nofollow);
+	    return !empty($link_url) ? '<a href="' . $link_url . '" ' . esc_attr($link_attr) . ' class="nacep-btn">' . $text . '</a>' : '';
+	}
 
-  										$button2 = !empty( $text_link2 ) ? '<a href="'.esc_url($text_link2).'" '.$text_link2_attr.' class="nacep-btn">'.esc_html($row_text2).'</a>' : '';
-
-											$text_link3 = !empty( $each_row['text_link3']['url'] ) ? $each_row['text_link3']['url'] : '';
-											$text_link3_external = !empty( $each_row['text_link3']['is_external'] ) ? 'target="_blank"' : '';
-											$text_link3_nofollow = !empty( $each_row['text_link3']['nofollow'] ) ? 'rel="nofollow"' : '';
-											$text_link3_attr = !empty( $text_link3 ) ?  $text_link3_external.' '.$text_link3_nofollow : '';
-
-  										$button3 = !empty( $text_link3 ) ? '<a href="'.esc_url($text_link3).'" '.$text_link3_attr.' class="nacep-btn">'.esc_html($row_text3).'</a>' : '';
-
-											$text_link4 = !empty( $each_row['text_link4']['url'] ) ? $each_row['text_link4']['url'] : '';
-											$text_link4_external = !empty( $each_row['text_link4']['is_external'] ) ? 'target="_blank"' : '';
-											$text_link4_nofollow = !empty( $each_row['text_link4']['nofollow'] ) ? 'rel="nofollow"' : '';
-											$text_link4_attr = !empty( $text_link4 ) ?  $text_link4_external.' '.$text_link4_nofollow : '';
-
-  										$button4 = !empty( $text_link4 ) ? '<a href="'.esc_url($text_link4).'" '.$text_link4_attr.' class="nacep-btn">'.esc_html($row_text4).'</a>' : '';
-
-											$text_link5 = !empty( $each_row['text_link5']['url'] ) ? $each_row['text_link5']['url'] : '';
-											$text_link5_external = !empty( $each_row['text_link5']['is_external'] ) ? 'target="_blank"' : '';
-											$text_link5_nofollow = !empty( $each_row['text_link5']['nofollow'] ) ? 'rel="nofollow"' : '';
-											$text_link5_attr = !empty( $text_link5 ) ?  $text_link5_external.' '.$text_link5_nofollow : '';
-
-  										$button5 = !empty( $text_link5 ) ? '<a href="'.esc_url($text_link5).'" '.$text_link5_attr.' class="nacep-btn">'.esc_html($row_text5).'</a>' : '';
-
-  										if ($text_style1 === 'icon') {
-												$out1 = $icon1 ? '<td>'.$icon1.'</td>' : '';
-  										} elseif ($text_style1 === 'button') {
-												$out1 = $button1 ? '<td>'.$button1.'</td>' : '';
-  										} else {
-												$out1 = $row_text1 ? '<td>'.$row_text1.'</td>' : '';
-  										}
-  										if ($text_style2 === 'icon') {
-												$out2 = $icon2 ? '<td>'.$icon2.'</td>' : '';
-  										} elseif ($text_style2 === 'button') {
-												$out2 = $button2 ? '<td>'.$button2.'</td>' : '';
-  										} else {
-												$out2 = $row_text2 ? '<td>'.$row_text2.'</td>' : '';
-  										}
-  										if ($text_style3 === 'icon') {
-												$out3 = $icon3 ? '<td>'.$icon3.'</td>' : '';
-  										} elseif ($text_style3 === 'button') {
-												$out3 = $button3 ? '<td>'.$button3.'</td>' : '';
-  										} else {
-												$out3 = $row_text3 ? '<td>'.$row_text3.'</td>' : '';
-  										}
-  										if ($text_style4 === 'icon') {
-												$out4 = $icon4 ? '<td>'.$icon4.'</td>' : '';
-  										} elseif ($text_style4 === 'button') {
-												$out4 = $button4 ? '<td>'.$button4.'</td>' : '';
-  										} else {
-												$out4 = $row_text4 ? '<td>'.$row_text4.'</td>' : '';
-  										}
-  										if ($text_style5 === 'icon') {
-												$out5 = $icon5 ? '<td>'.$icon5.'</td>' : '';
-  										} elseif ($text_style5 === 'button') {
-												$out5 = $button5 ? '<td>'.$button5.'</td>' : '';
-  										} else {
-												$out5 = $row_text5 ? '<td>'.$row_text5.'</td>' : '';
-  										}
-
-											  $output .= '<tr>'.$out1.$out2.$out3.$out4.$out5.'</tr>';
-										  }
-										}
-    	$output .= '</tbody>
-						    </table>
-						  </div>';
-
-		echo $output;
-
+	private function get_table_cell($each_row, $style_key, $icon, $button, $text) {
+	    $style = !empty($each_row[$style_key]) ? $each_row[$style_key] : '';
+	    if ($style === 'icon') {
+	        return '<td>' . $icon . '</td>';
+	    } elseif ($style === 'button') {
+	        return '<td>' . $button . '</td>';
+	    } else {
+	        return '<td>' . $text . '</td>';
+	    }
 	}
 
 }

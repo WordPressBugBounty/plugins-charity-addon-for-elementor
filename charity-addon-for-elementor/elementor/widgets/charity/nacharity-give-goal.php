@@ -229,22 +229,23 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 		 * Written in PHP and used to generate the final HTML.
 		*/
 		protected function render() {
-			$settings = $this->get_settings_for_display();
-			$id 				= !empty( $settings['id'] ) ? $settings['id'] : '';
-			$show_text 	= !empty( $settings['show_text'] ) ? $settings['show_text'] : '';
-			$show_bar 	= !empty( $settings['show_bar'] ) ? $settings['show_bar'] : '';
+		    $settings = $this->get_settings_for_display();
+		    $id = !empty($settings['id']) ? $settings['id'] : '';
+		    $show_text = !empty($settings['show_text']) ? $settings['show_text'] : '';
+		    $show_bar = !empty($settings['show_bar']) ? $settings['show_bar'] : '';
 
-			$show_text = $show_text ? 'true' : 'false';
-			$show_bar  = $show_bar ? 'true' : 'false';
+		    $show_text = $show_text ? 'true' : 'false';
+		    $show_bar = $show_bar ? 'true' : 'false';
 
-			$id 					 = $id ? ' id="'.$id.'"' : '';
-			$show_text 		 = $show_text ? ' show_text="'.$show_text.'"' : '';
-			$show_bar 		 = $show_bar ? ' show_bar="'.$show_bar.'"' : '';
+		    $id = $id ? ' id="' . esc_attr($id) . '"' : '';
+		    $show_text = $show_text ? ' show_text="' . esc_attr($show_text) . '"' : '';
+		    $show_bar = $show_bar ? ' show_bar="' . esc_attr($show_bar) . '"' : '';
 
-	  	$output = '<div class="nacep-give-goal">'.do_shortcode( '[give_goal '. $id . $show_text . $show_bar .']' ).'</div>';
+		    $output = '<div class="nacep-give-goal">'
+		        . do_shortcode('[give_goal' . $id . $show_text . $show_bar . ']')
+		        . '</div>';
 
-		  echo $output;
-
+		    echo wp_kses_post($output);
 		}
 
 	}

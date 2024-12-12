@@ -189,9 +189,9 @@ if ( is_plugin_active( 'charitable/charitable.php' ) ) {
 			$registration_link_text = $registration_link_text ? ' registration_link_text="'.$registration_link_text.'"' : '';
 			$redirect = $redirect ? ' redirect="'.$redirect.'"' : '';
 
-	  	$output = '<div class="nacep-charitable-login nacep-form">'.do_shortcode( '[charitable_login'. $logged_in_message . $registration_link_text . $redirect .']' ).'</div>';
+	  		$output = '<div class="nacep-charitable-login nacep-form">'.do_shortcode( '[charitable_login'. $logged_in_message . $registration_link_text . $redirect .']' ).'</div>';
 
-		  echo $output;
+		  	echo $output;
 
 		}
 

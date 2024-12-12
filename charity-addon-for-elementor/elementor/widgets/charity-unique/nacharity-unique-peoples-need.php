@@ -796,19 +796,19 @@ class Charity_Elementor_Addon_Unique_Peoples_Needs extends Widget_Base{
 
 		// Carousel Data's
 			$carousel_loop = $carousel_loop !== 'true' ? ' data-loop="true"' : ' data-loop="false"';
-			$carousel_items = $carousel_items ? ' data-items="'. $carousel_items .'"' : ' data-items="1"';
-			$carousel_margin = $carousel_margin ? ' data-margin="'. $carousel_margin .'"' : ' data-margin="0"';
+			$carousel_items = $carousel_items ? ' data-items="'. esc_attr( $carousel_items ) .'"' : ' data-items="1"';
+			$carousel_margin = $carousel_margin ? ' data-margin="'. esc_attr( $carousel_margin ) .'"' : ' data-margin="0"';
 			$carousel_dots = $carousel_dots ? ' data-dots="true"' : ' data-dots="false"';
 			$carousel_nav = $carousel_nav ? ' data-nav="true"' : ' data-nav="false"';
-			$carousel_autoplay_timeout = $carousel_autoplay_timeout ? ' data-autoplay-timeout="'. $carousel_autoplay_timeout .'"' : '';
+			$carousel_autoplay_timeout = $carousel_autoplay_timeout ? ' data-autoplay-timeout="'. esc_attr( $carousel_autoplay_timeout ) .'"' : '';
 			$carousel_autoplay = $carousel_autoplay ? ' data-autoplay="true"' : '';
 			$carousel_animate_out = $carousel_animate_out ? ' data-animateout="true"' : '';
 			$carousel_mousedrag = $carousel_mousedrag !== 'true' ? ' data-mouse-drag="true"' : ' data-mouse-drag="false"';
 			$carousel_autowidth = $carousel_autowidth ? ' data-auto-width="true"' : '';
 			$carousel_autoheight = $carousel_autoheight ? ' data-auto-height="true"' : '';
-			$carousel_tablet = $carousel_items_tablet ? ' data-items-tablet="'. $carousel_items_tablet .'"' : ' data-items-tablet="1"';
-			$carousel_mobile = $carousel_items_mobile ? ' data-items-mobile-landscape="'. $carousel_items_mobile .'"' : ' data-items-mobile-landscape="1"';
-			$carousel_small_mobile = $carousel_items_mobile ? ' data-items-mobile-portrait="'. $carousel_items_mobile .'"' : ' data-items-mobile-portrait="1"';
+			$carousel_tablet = $carousel_items_tablet ? ' data-items-tablet="'. esc_attr( $carousel_items_tablet ) .'"' : ' data-items-tablet="1"';
+			$carousel_mobile = $carousel_items_mobile ? ' data-items-mobile-landscape="'. esc_attr( $carousel_items_mobile ) .'"' : ' data-items-mobile-landscape="1"';
+			$carousel_small_mobile = $carousel_items_mobile ? ' data-items-mobile-portrait="'. esc_attr( $carousel_items_mobile ) .'"' : ' data-items-mobile-portrait="1"';
 
 		$needs_title = $needs_title ? '<h5>'.esc_html($needs_title).'</h5>' : '';
 		$needs_number = $needs_number ? '<span>'.esc_html($needs_number).'</span> ' : '';
@@ -835,7 +835,7 @@ class Charity_Elementor_Addon_Unique_Peoples_Needs extends Widget_Base{
 				$image_url = wp_get_attachment_url( $needs_image );
 
 				$needs_image = $image_url ? '<div class="nacep-image"><img src="'.esc_url($image_url).'" alt="Slider"></div>' : '';
-				$output .= '<div class="item"><div class="needs-image">'.$needs_image.'</div></div>';
+				$output .= '<div class="item"><div class="needs-image">'.esc_url( $needs_image ).'</div></div>';
 			}
 		$output .= '</div></div></div></div>';
 		echo $output;

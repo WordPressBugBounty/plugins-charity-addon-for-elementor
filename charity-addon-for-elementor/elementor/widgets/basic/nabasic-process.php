@@ -907,131 +907,111 @@ class Charity_Elementor_Addon_Process extends Widget_Base{
 	 * Written in PHP and used to generate the final HTML.
 	*/
 	protected function render() {
-		// Process query
-		$settings = $this->get_settings_for_display();
-		$process = $this->get_settings_for_display( 'process_groups' );
-		$processTwo = $this->get_settings_for_display( 'processTwo_groups' );
-		$processThree = $this->get_settings_for_display( 'processThree_groups' );
-		$process_style = !empty( $settings['process_style'] ) ? $settings['process_style'] : '';
-		$process_col = !empty( $settings['process_col'] ) ? $settings['process_col'] : '';
-		$need_dot = !empty( $settings['need_dot'] ) ? $settings['need_dot'] : '';
-		$need_border_style = !empty( $settings['need_border_style'] ) ? $settings['need_border_style'] : '';
+	    // Process query
+	    $settings = $this->get_settings_for_display();
+	    $process = $this->get_settings_for_display('process_groups');
+	    $processTwo = $this->get_settings_for_display('processTwo_groups');
+	    $processThree = $this->get_settings_for_display('processThree_groups');
+	    $process_style = !empty($settings['process_style']) ? sanitize_text_field($settings['process_style']) : '';
+	    $process_col = !empty($settings['process_col']) ? sanitize_text_field($settings['process_col']) : '';
+	    $need_dot = !empty($settings['need_dot']) ? $settings['need_dot'] : '';
+	    $need_border_style = !empty($settings['need_border_style']) ? $settings['need_border_style'] : '';
 
-		if ($need_dot) {
-			$dot = '<span class="circle"></span>';
-		} else {
-			$dot = '';
-		}
-		if ($need_border_style) {
-			$border_class = ' border-style';
-		} else {
-			$border_class = '';
-		}
-		if ($process_style === 'two') {
-			$style_class = ' style-two';
-		} elseif ($process_style === 'three') {
-			$style_class = ' style-three';
-		} else {
-			$style_class = '';
-		}
-		if ($process_col === 'one') {
-			$col_class = ' one-col';
-		} elseif ($process_col === 'two') {
-			$col_class = ' two-col';
-		} elseif ($process_col === 'three') {
-			$col_class = ' three-col';
-		} else {
-			$col_class = '';
-		}
+	    // Dot and border class
+	    $dot = $need_dot ? '<span class="circle"></span>' : '';
+	    $border_class = $need_border_style ? ' border-style' : '';
 
-		$output = '';
+	    // Process style class
+	    $style_class = '';
+	    if ($process_style === 'two') {
+	        $style_class = ' style-two';
+	    } elseif ($process_style === 'three') {
+	        $style_class = ' style-three';
+	    }
 
-		$output .= '<div class="nacep-process-wrap'.esc_attr($style_class).'">';
-			if ($process_style === 'two') {
-				// Group Param Output
-				$i=1;
-				foreach ( $processTwo as $each_logo ) {
-					$process_title = !empty( $each_logo['process_title'] ) ? $each_logo['process_title'] : '';
-					$process_subtitle = !empty( $each_logo['process_subtitle'] ) ? $each_logo['process_subtitle'] : '';
-					$process_content = !empty( $each_logo['process_content'] ) ? $each_logo['process_content'] : '';
+	    // Process column class
+	    $col_class = '';
+	    if ($process_col === 'one') {
+	        $col_class = ' one-col';
+	    } elseif ($process_col === 'two') {
+	        $col_class = ' two-col';
+	    } elseif ($process_col === 'three') {
+	        $col_class = ' three-col';
+	    }
 
-			  	$title = !empty( $process_title ) ? '<h3 class="process-title">'.esc_html($process_title).'</h3>' : '';
-			  	$subtitle = !empty( $process_subtitle ) ? '<h5>'.esc_html($process_subtitle).'</h5>' : '';
-					$content = $process_content ? '<p>'.esc_html($process_content).'</p>' : '';
-					if ($i >= 10) {
-						$pre = '';
-					} else {
-						$pre = '0';
-					}
-					$count = '<span class="count" data-count="'.$pre.$i.'"></span>';
+	    // Output variable
+	    $output = '<div class="nacep-process-wrap' . esc_attr($style_class) . '">';
 
-				  $output .= '<div class="process-number-item'.esc_attr($col_class).'">'.$title.$subtitle.$count.$content.'</div>';
-				  $i++;
-				}
-			} elseif ($process_style === 'three') {
-				// Group Param Output
-				$i=1;
-				foreach ( $processThree as $each_logo ) {
-					$process_image = !empty( $each_logo['process_image']['id'] ) ? $each_logo['process_image']['id'] : '';
-					$process_title = !empty( $each_logo['process_title'] ) ? $each_logo['process_title'] : '';
-					$process_subtitle = !empty( $each_logo['process_subtitle'] ) ? $each_logo['process_subtitle'] : '';
-					$process_content = !empty( $each_logo['process_content'] ) ? $each_logo['process_content'] : '';
+	    if ($process_style === 'two') {
+	        // Group Param Output for processTwo
+	        $i = 1;
+	        foreach ($processTwo as $each_logo) {
+	            $process_title = !empty($each_logo['process_title']) ? esc_html($each_logo['process_title']) : '';
+	            $process_subtitle = !empty($each_logo['process_subtitle']) ? esc_html($each_logo['process_subtitle']) : '';
+	            $process_content = !empty($each_logo['process_content']) ? esc_html($each_logo['process_content']) : '';
 
-			  	$title = !empty( $process_title ) ? '<h3 class="process-title">'.$process_title.'</h3>' : '';
-			  	$subtitle = !empty( $process_subtitle ) ? '<h5>'.$process_subtitle.'</h5>' : '';
-					$content = $process_content ? '<p>'.$process_content.'</p>' : '';
-					$image_url = wp_get_attachment_url( $process_image );
-					$process_image = $image_url ? '<div class="nacep-image"><img src="'.esc_url($image_url).'" alt="'.esc_attr($process_title).'"></div>' : '';
-					if ($i >= 10) {
-						$pre = '';
-					} else {
-						$pre = '0';
-					}
-					$count = '<span class="count" data-count="'.$pre.$i.'"></span>';
+	            $title = $process_title ? '<h3 class="process-title">' . $process_title . '</h3>' : '';
+	            $subtitle = $process_subtitle ? '<h5>' . $process_subtitle . '</h5>' : '';
+	            $content = $process_content ? '<p>' . $process_content . '</p>' : '';
+	            $pre = $i < 10 ? '0' : '';
+	            $count = '<span class="count" data-count="' . esc_attr($pre . $i) . '"></span>';
 
-				  $output .= '<div class="nacep-process-item-vertical"><div class="vertical-info">'.$count.$title.$subtitle.$content.'</div>'.$process_image.'</div>';
-				  $i++;
-				}
-			} else {
-				// Group Param Output
-				foreach ( $process as $each_logo ) {
-					$upload_type = !empty( $each_logo['upload_type'] ) ? $each_logo['upload_type'] : '';
-					$process_title = !empty( $each_logo['process_title'] ) ? $each_logo['process_title'] : '';
-					$process_image = !empty( $each_logo['process_image']['id'] ) ? $each_logo['process_image']['id'] : '';
-					$process_icon = !empty( $each_logo['process_icon'] ) ? $each_logo['process_icon'] : '';
-					$process_content = !empty( $each_logo['process_content'] ) ? $each_logo['process_content'] : '';
+	            $output .= '<div class="process-number-item' . esc_attr($col_class) . '">' . $title . $subtitle . $count . $content . '</div>';
+	            $i++;
+	        }
+	    } elseif ($process_style === 'three') {
+	        // Group Param Output for processThree
+	        $i = 1;
+	        foreach ($processThree as $each_logo) {
+	            $process_image = !empty($each_logo['process_image']['id']) ? intval($each_logo['process_image']['id']) : '';
+	            $process_title = !empty($each_logo['process_title']) ? esc_html($each_logo['process_title']) : '';
+	            $process_subtitle = !empty($each_logo['process_subtitle']) ? esc_html($each_logo['process_subtitle']) : '';
+	            $process_content = !empty($each_logo['process_content']) ? esc_html($each_logo['process_content']) : '';
 
-					$image_url = wp_get_attachment_url( $process_image );
-					$process_image = $image_url ? '<img src="'.esc_url($image_url).'" alt="'.esc_attr($process_title).'">' : '';
-					$process_icon = $process_icon ? '<i class="'.esc_attr($process_icon).'"></i>' : '';
-					$content = $process_content ? '<p>'.esc_html($process_content).'</p>' : '';
+	            $title = $process_title ? '<h3 class="process-title">' . $process_title . '</h3>' : '';
+	            $subtitle = $process_subtitle ? '<h5>' . $process_subtitle . '</h5>' : '';
+	            $content = $process_content ? '<p>' . $process_content . '</p>' : '';
+	            $image_url = wp_get_attachment_url($process_image);
+	            $process_image = $image_url ? '<div class="nacep-image"><img src="' . esc_url($image_url) . '" alt="' . esc_attr($process_title) . '"></div>' : '';
+	            $pre = $i < 10 ? '0' : '';
+	            $count = '<span class="count" data-count="' . esc_attr($pre . $i) . '"></span>';
 
-					if ($upload_type === 'icon'){
-					  $icon_main = $process_icon;
-					} else {
-					  $icon_main = $process_image;
-					}
+	            $output .= '<div class="nacep-process-item-vertical"><div class="vertical-info">' . $count . $title . $subtitle . $content . '</div>' . $process_image . '</div>';
+	            $i++;
+	        }
+	    } else {
+	        // Group Param Output for process
+	        foreach ($process as $each_logo) {
+	            $upload_type = !empty($each_logo['upload_type']) ? sanitize_text_field($each_logo['upload_type']) : '';
+	            $process_title = !empty($each_logo['process_title']) ? esc_html($each_logo['process_title']) : '';
+	            $process_image = !empty($each_logo['process_image']['id']) ? intval($each_logo['process_image']['id']) : '';
+	            $process_icon = !empty($each_logo['process_icon']) ? esc_attr($each_logo['process_icon']) : '';
+	            $process_content = !empty($each_logo['process_content']) ? esc_html($each_logo['process_content']) : '';
 
-			  	$title = !empty( $process_title ) ? '<h3 class="process-title">'.$process_title.'</h3>' : '';
+	            $image_url = wp_get_attachment_url($process_image);
+	            $process_image_html = $image_url ? '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($process_title) . '">' : '';
+	            $process_icon_html = $process_icon ? '<i class="' . esc_attr($process_icon) . '"></i>' : '';
+	            $content = $process_content ? '<p>' . $process_content . '</p>' : '';
 
-				  $output .= '<div class="nacep-process-item'.esc_attr($border_class).'">
-									      <div class="process-info">
-									        <div class="nacep-icon">
-									          <div class="nacep-table-wrap">
-									            <div class="nacep-align-wrap">
-									              '.$dot.$icon_main.'
-									            </div>
-									          </div>
-									        </div>
-									        '.$title.$content.'
-									      </div>
-									    </div>';
-				}
-			}
+	            $icon_main = $upload_type === 'icon' ? $process_icon_html : $process_image_html;
 
-		$output .= '</div>';
-		echo $output;
+	            $title = $process_title ? '<h3 class="process-title">' . $process_title . '</h3>' : '';
 
+	            $output .= '<div class="nacep-process-item' . esc_attr($border_class) . '">
+	                            <div class="process-info">
+	                                <div class="nacep-icon">
+	                                    <div class="nacep-table-wrap">
+	                                        <div class="nacep-align-wrap">' . $dot . $icon_main . '</div>
+	                                    </div>
+	                                </div>
+	                                ' . $title . $content . '
+	                            </div>
+	                        </div>';
+	        }
+	    }
+
+	    $output .= '</div>';
+	    echo $output;
 	}
 
 }

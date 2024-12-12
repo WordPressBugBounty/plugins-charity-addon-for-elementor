@@ -1094,11 +1094,11 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 			$settings = $this->get_settings_for_display();
 			$cause_id 				= !empty( $settings['cause_id'] ) ? $settings['cause_id'] : '';
 			$sub_title 				= !empty( $settings['sub_title'] ) ? $settings['sub_title'] : '';
-			$need_content 				= !empty( $settings['need_content'] ) ? $settings['need_content'] : '';
-			$need_counter 				= !empty( $settings['need_counter'] ) ? $settings['need_counter'] : '';
+			$need_content 			= !empty( $settings['need_content'] ) ? $settings['need_content'] : '';
+			$need_counter 			= !empty( $settings['need_counter'] ) ? $settings['need_counter'] : '';
 			$btn_text 				= !empty( $settings['btn_text'] ) ? $settings['btn_text'] : '';
-			$btn_icon         = !empty( $settings['btn_icon'] ) ? $settings['btn_icon'] : '';
-			$icon = $btn_icon ? ' <i class="'.$btn_icon.'" aria-hidden="true"></i>' : '';
+			$btn_icon         		= !empty( $settings['btn_icon'] ) ? esc_attr( $settings['btn_icon'] ) : '';
+			$icon 					= $btn_icon ? ' <i class="'.$btn_icon.'" aria-hidden="true"></i>' : '';
 
 			$count_type = !empty( $settings['count_type'] ) ? $settings['count_type'] : '';
 			$count_date_static = !empty( $settings['count_date_static'] ) ? $settings['count_date_static'] : '';
@@ -1140,19 +1140,19 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 			$label_minute = $label_minute ? esc_html($label_minute) : esc_html__('Minute','charity-addon-for-elementor');
 			$label_second = $label_second ? esc_html($label_second) : esc_html__('Second','charity-addon-for-elementor');
 
-			$bar_color 				= !empty( $settings['bar_color'] ) ? $settings['bar_color'] : '';
+			$bar_color 			= !empty( $settings['bar_color'] ) ? $settings['bar_color'] : '';
 			$bar_fill_color 	= !empty( $settings['bar_fill_color'] ) ? $settings['bar_fill_color'] : '';
-			$reverse 				  = !empty( $settings['reverse'] ) ? $settings['reverse'] : '';
-			$size 						= !empty( $settings['size'] ) ? $settings['size'] : '';
-			$thickness 						= !empty( $settings['thickness'] ) ? $settings['thickness'] : '';
-			$start_angle 						= !empty( $settings['start_angle'] ) ? $settings['start_angle'] : '';
+			$reverse 			= !empty( $settings['reverse'] ) ? $settings['reverse'] : '';
+			$size 				= !empty( $settings['size'] ) ? $settings['size'] : '';
+			$thickness 			= !empty( $settings['thickness'] ) ? $settings['thickness'] : '';
+			$start_angle 		= !empty( $settings['start_angle'] ) ? $settings['start_angle'] : '';
 
-			$bar_color = $bar_color ? ' data-color="'.$bar_color.'"' : '';
-			$bar_fill_color = $bar_fill_color ? ' data-fill="'.$bar_fill_color.'"' : '';
+			$bar_color = $bar_color ? ' data-color="'.esc_attr( $bar_color ).'"' : '';
+			$bar_fill_color = $bar_fill_color ? ' data-fill="'.esc_attr( $bar_fill_color ).'"' : '';
 			$reverse = $reverse ? ' data-reverse="true"' : ' data-reverse="false"';
-			$size = $size ? ' data-size="'.$size.'"' : '';
-			$thickness = $thickness ? ' data-thickness="'.$thickness.'"' : '';
-			$start_angle = $start_angle ? ' data-start="'.$start_angle.'"' : '';
+			$size = $size ? ' data-size="'.esc_attr( $size ).'"' : '';
+			$thickness = $thickness ? ' data-thickness="'.esc_attr( $thickness ).'"' : '';
+			$start_angle = $start_angle ? ' data-start="'.esc_attr( $start_angle ).'"' : '';
 
 			$countdown_format = $countdown_format ? $countdown_format : '';
 

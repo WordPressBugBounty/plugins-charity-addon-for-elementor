@@ -74,10 +74,9 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 
 			$login_redirect = $login_redirect ? ' login-redirect="'.$login_redirect.'"' : '';
 
-	  	$output = '<div class="nacep-give-login">'.do_shortcode( '[give_login'. $login_redirect .']' ).'</div>';
+	  		$output = '<div class="nacep-give-login">'.do_shortcode( '[give_login'. $login_redirect .']' ).'</div>';
 
-		  echo $output;
-
+			echo $output;
 		}
 
 	}

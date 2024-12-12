@@ -1558,23 +1558,23 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 		 * Written in PHP and used to generate the final HTML.
 		*/
 		protected function render() {
-			$settings = $this->get_settings_for_display();
-			$cause_style 				= !empty( $settings['cause_style'] ) ? $settings['cause_style'] : '';
-			$cause_col 				= !empty( $settings['cause_col'] ) ? $settings['cause_col'] : '';
-			$cause_limit 				= !empty( $settings['cause_limit'] ) ? $settings['cause_limit'] : '';
-			$cause_order 				= !empty( $settings['cause_order'] ) ? $settings['cause_order'] : '';
-			$cause_orderby 				= !empty( $settings['cause_orderby'] ) ? $settings['cause_orderby'] : '';
-			$cause_show_category 				= !empty( $settings['cause_show_category'] ) ? $settings['cause_show_category'] : [];
-			$cause_show_id 				= !empty( $settings['cause_show_id'] ) ? $settings['cause_show_id'] : '';
-			$cause_pagination 				= !empty( $settings['cause_pagination'] ) ? $settings['cause_pagination'] : '';
-			$read_more_txt 				= !empty( $settings['read_more_txt'] ) ? $settings['read_more_txt'] : '';
-			$btn_icon         = !empty( $settings['btn_icon'] ) ? $settings['btn_icon'] : '';
-			$icon = $btn_icon ? ' <i class="'.$btn_icon.'" aria-hidden="true"></i>' : '';
-			$goal_title 				= !empty( $settings['goal_title'] ) ? $settings['goal_title'] : '';
-			$income_title 				= !empty( $settings['income_title'] ) ? $settings['income_title'] : '';
-			$donor_title 				= !empty( $settings['donor_title'] ) ? $settings['donor_title'] : '';
-			$all_text 				= !empty( $settings['all_text'] ) ? $settings['all_text'] : '';
-			$need_filter = !empty( $settings['need_filter'] ) ? $settings['need_filter'] : '';
+			$settings 			= $this->get_settings_for_display();
+			$cause_style 		= !empty( $settings['cause_style'] ) ? $settings['cause_style'] : '';
+			$cause_col 			= !empty( $settings['cause_col'] ) ? $settings['cause_col'] : '';
+			$cause_limit 		= !empty( $settings['cause_limit'] ) ? $settings['cause_limit'] : '';
+			$cause_order 		= !empty( $settings['cause_order'] ) ? $settings['cause_order'] : '';
+			$cause_orderby 		= !empty( $settings['cause_orderby'] ) ? $settings['cause_orderby'] : '';
+			$cause_show_category 	= !empty( $settings['cause_show_category'] ) ? $settings['cause_show_category'] : [];
+			$cause_show_id 		= !empty( $settings['cause_show_id'] ) ? $settings['cause_show_id'] : '';
+			$cause_pagination 	= !empty( $settings['cause_pagination'] ) ? $settings['cause_pagination'] : '';
+			$read_more_txt 		= !empty( $settings['read_more_txt'] ) ? $settings['read_more_txt'] : '';
+			$btn_icon         	= !empty( $settings['btn_icon'] ) ? $settings['btn_icon'] : '';
+			$icon 				= $btn_icon ? ' <i class="'.$btn_icon.'" aria-hidden="true"></i>' : '';
+			$goal_title 		= !empty( $settings['goal_title'] ) ? $settings['goal_title'] : '';
+			$income_title 		= !empty( $settings['income_title'] ) ? $settings['income_title'] : '';
+			$donor_title 		= !empty( $settings['donor_title'] ) ? $settings['donor_title'] : '';
+			$all_text 			= !empty( $settings['all_text'] ) ? $settings['all_text'] : '';
+			$need_filter		= !empty( $settings['need_filter'] ) ? $settings['need_filter'] : '';
 
 			if ($cause_col === '3') {
 				$col_class = ' data-items="3"';
@@ -1601,19 +1601,19 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 
 			// Carousel Data's
 				$carousel_loop = $carousel_loop !== 'true' ? ' data-loop="true"' : ' data-loop="false"';
-				$carousel_items = $carousel_items ? ' data-items="'. $carousel_items .'"' : ' data-items="1"';
-				$carousel_margin = $carousel_margin ? ' data-margin="'. $carousel_margin .'"' : ' data-margin="0"';
+				$carousel_items = $carousel_items ? ' data-items="'. esc_attr($carousel_items) .'"' : ' data-items="1"';
+				$carousel_margin = $carousel_margin ? ' data-margin="'. esc_attr($carousel_margin) .'"' : ' data-margin="0"';
 				$carousel_dots = $carousel_dots ? ' data-dots="true"' : ' data-dots="false"';
 				$carousel_nav = $carousel_nav ? ' data-nav="true"' : ' data-nav="false"';
-				$carousel_autoplay_timeout = $carousel_autoplay_timeout ? ' data-autoplay-timeout="'. $carousel_autoplay_timeout .'"' : '';
+				$carousel_autoplay_timeout = $carousel_autoplay_timeout ? ' data-autoplay-timeout="'. esc_attr($carousel_autoplay_timeout) .'"' : '';
 				$carousel_autoplay = $carousel_autoplay ? ' data-autoplay="true"' : '';
 				$carousel_animate_out = $carousel_animate_out ? ' data-animateout="true"' : '';
 				$carousel_mousedrag = $carousel_mousedrag !== 'true' ? ' data-mouse-drag="true"' : ' data-mouse-drag="false"';
 				$carousel_autowidth = $carousel_autowidth ? ' data-auto-width="true"' : '';
 				$carousel_autoheight = $carousel_autoheight ? ' data-auto-height="true"' : '';
-				$carousel_tablet = $carousel_items_tablet ? ' data-items-tablet="'. $carousel_items_tablet .'"' : ' data-items-tablet="1"';
-				$carousel_mobile = $carousel_items_mobile ? ' data-items-mobile-landscape="'. $carousel_items_mobile .'"' : ' data-items-mobile-landscape="1"';
-				$carousel_small_mobile = $carousel_items_mobile ? ' data-items-mobile-portrait="'. $carousel_items_mobile .'"' : ' data-items-mobile-portrait="1"';
+				$carousel_tablet = $carousel_items_tablet ? ' data-items-tablet="'. esc_attr($carousel_items_tablet) .'"' : ' data-items-tablet="1"';
+				$carousel_mobile = $carousel_items_mobile ? ' data-items-mobile-landscape="'. esc_attr($carousel_items_mobile) .'"' : ' data-items-mobile-landscape="1"';
+				$carousel_small_mobile = $carousel_items_mobile ? ' data-items-mobile-portrait="'. esc_attr($carousel_items_mobile) .'"' : ' data-items-mobile-portrait="1"';
 
 			// Turn output buffer on
 			ob_start();

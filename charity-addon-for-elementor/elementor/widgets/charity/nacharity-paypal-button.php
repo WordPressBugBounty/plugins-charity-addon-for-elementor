@@ -85,7 +85,7 @@ if ( is_plugin_active( 'easy-paypal-donation/easy-paypal-donation.php' ) ) {
 
 			$id 					 = $id ? ' id="'.$id.'"' : '';
 
-	  	$output = '<div class="nacep-paypal-btn">'.do_shortcode( '[wpedon'. $id .']' ).'</div>';
+	  		$output = '<div class="nacep-paypal-btn">'.do_shortcode( '[wpedon'. $id .']' ).'</div>';
 
 		  echo $output;
 

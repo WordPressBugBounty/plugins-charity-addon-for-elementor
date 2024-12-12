@@ -661,41 +661,41 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 		 * Written in PHP and used to generate the final HTML.
 		*/
 		protected function render() {
-			$settings = $this->get_settings_for_display();
-			$cause_id 				= !empty( $settings['cause_id'] ) ? $settings['cause_id'] : '';
-			$goal_title 				= !empty( $settings['goal_title'] ) ? $settings['goal_title'] : '';
-			$income_title 				= !empty( $settings['income_title'] ) ? $settings['income_title'] : '';
-			$remaing_title 				= !empty( $settings['remaing_title'] ) ? $settings['remaing_title'] : '';
-			$donation_title 				= !empty( $settings['donation_title'] ) ? $settings['donation_title'] : '';
-			$btn_text 				= !empty( $settings['btn_text'] ) ? $settings['btn_text'] : '';
-			$btn_icon 				= !empty( $settings['btn_icon'] ) ? $settings['btn_icon'] : '';
-			$icon = $btn_icon ? ' <i class="'.$btn_icon.'" aria-hidden="true"></i>' : '';
-			$hide_btn  = ( isset( $settings['hide_btn'] ) && ( 'true' == $settings['hide_btn'] ) ) ? true : false;
+			$settings 			= $this->get_settings_for_display();
+			$cause_id 			= !empty( $settings['cause_id'] ) ? $settings['cause_id'] : '';
+			$goal_title 		= !empty( $settings['goal_title'] ) ? $settings['goal_title'] : '';
+			$income_title 		= !empty( $settings['income_title'] ) ? $settings['income_title'] : '';
+			$remaing_title 		= !empty( $settings['remaing_title'] ) ? $settings['remaing_title'] : '';
+			$donation_title 	= !empty( $settings['donation_title'] ) ? $settings['donation_title'] : '';
+			$btn_text 			= !empty( $settings['btn_text'] ) ? $settings['btn_text'] : '';
+			$btn_icon 			= !empty( $settings['btn_icon'] ) ? $settings['btn_icon'] : '';
+			$icon 				= $btn_icon ? ' <i class="'.esc_attr( $btn_icon ).'" aria-hidden="true"></i>' : '';
+			$hide_btn  			= ( isset( $settings['hide_btn'] ) && ( 'true' == $settings['hide_btn'] ) ) ? true : false;
 
-			$bar_color 				= !empty( $settings['bar_color'] ) ? $settings['bar_color'] : '';
+			$bar_color 			= !empty( $settings['bar_color'] ) ? $settings['bar_color'] : '';
 			$bar_fill_color 	= !empty( $settings['bar_fill_color'] ) ? $settings['bar_fill_color'] : '';
-			$reverse 				  = !empty( $settings['reverse'] ) ? $settings['reverse'] : '';
-			$size 						= !empty( $settings['size'] ) ? $settings['size'] : '';
-			$thickness 				= !empty( $settings['thickness'] ) ? $settings['thickness'] : '';
-			$start_angle 			= !empty( $settings['start_angle'] ) ? $settings['start_angle'] : '';
+			$reverse 			= !empty( $settings['reverse'] ) ? $settings['reverse'] : '';
+			$size 				= !empty( $settings['size'] ) ? $settings['size'] : '';
+			$thickness 			= !empty( $settings['thickness'] ) ? $settings['thickness'] : '';
+			$start_angle 		= !empty( $settings['start_angle'] ) ? $settings['start_angle'] : '';
 
-			$bar_color = $bar_color ? ' data-color="'.$bar_color.'"' : '';
-			$bar_fill_color = $bar_fill_color ? ' data-fill="'.$bar_fill_color.'"' : '';
-			$reverse = $reverse ? ' data-reverse="true"' : ' data-reverse="false"';
-			$size = $size ? ' data-size="'.$size.'"' : '';
-			$thickness = $thickness ? ' data-thickness="'.$thickness.'"' : '';
-			$start_angle = $start_angle ? ' data-start="'.$start_angle.'"' : '';
+			$bar_color 			= $bar_color ? ' data-color="'.esc_attr($bar_color).'"' : '';
+			$bar_fill_color 	= $bar_fill_color ? ' data-fill="'.esc_attr($bar_fill_color).'"' : '';
+			$reverse 			= $reverse ? ' data-reverse="true"' : ' data-reverse="false"';
+			$size 				= $size ? ' data-size="'.esc_attr($size).'"' : '';
+			$thickness 			= $thickness ? ' data-thickness="'.esc_attr($thickness).'"' : '';
+			$start_angle 		= $start_angle ? ' data-start="'.esc_attr($start_angle).'"' : '';
 
 			// Turn output buffer on
 			ob_start();
 
 			$cas_args = array(
-	      'post_type' => 'give_forms',
-	      'posts_per_page' => 1,
-	      'orderby' => 'none',
-	      'order' => 'ASC',
-	      'post__in' => (array) $cause_id,
-	    );
+		      'post_type' => 'give_forms',
+		      'posts_per_page' => 1,
+		      'orderby' => 'none',
+		      'order' => 'ASC',
+		      'post__in' => (array) $cause_id,
+		    );
 	    $form        = new \Give_Donate_Form( $cause_id );
 			$goal        = $form->goal;
 			$income      = $form->get_earnings();

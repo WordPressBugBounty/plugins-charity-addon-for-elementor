@@ -962,7 +962,7 @@ class Charity_Elementor_Addon_Blog extends Widget_Base{
 		$blog_pagination  = ( isset( $settings['blog_pagination'] ) && ( 'true' == $settings['blog_pagination'] ) ) ? true : false;
 		$read_more_txt = !empty( $settings['read_more_txt'] ) ? $settings['read_more_txt'] : '';
 		$btn_icon         = !empty( $settings['btn_icon'] ) ? $settings['btn_icon'] : '';
-		$icon = $btn_icon ? ' <i class="'.$btn_icon.'" aria-hidden="true"></i>' : '';
+		$icon = $btn_icon ? ' <i class="'.esc_attr( $btn_icon ).'" aria-hidden="true"></i>' : '';
 		$date_format = !empty( $settings['date_format'] ) ? $settings['date_format'] : '';
 
 		$blog_col = $blog_col ? $blog_col : '3';

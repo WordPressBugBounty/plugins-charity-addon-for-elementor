@@ -54,9 +54,9 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 		protected function render() {
 			$settings = $this->get_settings_for_display();
 
-	  	$output = '<div class="nacep-give-profile">'.do_shortcode( '[give_profile_editor]' ).'</div>';
+	  		$output = '<div class="nacep-give-profile">'.do_shortcode( '[give_profile_editor]' ).'</div>';
 
-		  echo $output;
+		  	echo $output;
 
 		}
 

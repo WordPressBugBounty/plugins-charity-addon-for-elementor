@@ -885,170 +885,103 @@ if ( !is_plugin_active( 'charity-addon-for-elementor-pro/charity-addon-for-eleme
 		 * Written in PHP and used to generate the final HTML.
 		*/
 		protected function render() {
-			$settings = $this->get_settings_for_display();
-			$GalleryFilter_groups = !empty( $settings['GalleryFilter_groups'] ) ? $settings['GalleryFilter_groups'] : [];
-			$GalleryItems_groups = !empty( $settings['GalleryItems_groups'] ) ? $settings['GalleryItems_groups'] : [];
-			$need_filter = !empty( $settings['need_filter'] ) ? $settings['need_filter'] : '';
-			$dot_position = !empty( $settings['dot_position'] ) ? $settings['dot_position'] : '';
-			$gallery_all_filter = !empty( $settings['gallery_all_filter'] ) ? $settings['gallery_all_filter'] : [];
-			$info_position = !empty( $settings['info_position'] ) ? $settings['info_position'] : '';
-			$icon_position = !empty( $settings['icon_position'] ) ? $settings['icon_position'] : '';
-			$icon_alignment = !empty( $settings['icon_alignment'] ) ? $settings['icon_alignment'] : '';
-			$gallery_item = !empty( $settings['gallery_item'] ) ? $settings['gallery_item'] : '';
+		    $settings = $this->get_settings_for_display();
+		    $GalleryFilter_groups = !empty($settings['GalleryFilter_groups']) ? $settings['GalleryFilter_groups'] : [];
+		    $GalleryItems_groups = !empty($settings['GalleryItems_groups']) ? $settings['GalleryItems_groups'] : [];
+		    $need_filter = !empty($settings['need_filter']) ? $settings['need_filter'] : '';
+		    $dot_position = !empty($settings['dot_position']) ? $settings['dot_position'] : '';
+		    $gallery_all_filter = !empty($settings['gallery_all_filter']) ? $settings['gallery_all_filter'] : esc_html__('All', 'charity-addon-for-elementor');
+		    $info_position = !empty($settings['info_position']) ? $settings['info_position'] : '';
+		    $icon_position = !empty($settings['icon_position']) ? $settings['icon_position'] : '';
+		    $icon_alignment = !empty($settings['icon_alignment']) ? $settings['icon_alignment'] : '';
+		    $gallery_item = !empty($settings['gallery_item']) ? $settings['gallery_item'] : '';
 
-			$gallery_all_filter = $gallery_all_filter ? $gallery_all_filter : esc_html( 'All', 'charity-addon-for-elementor' );
+		    // Determine classes based on settings
+		    $dot_cls = $dot_position === 'top' ? ' dot-top' : ($dot_position === 'left' ? ' dot-left' : ($dot_position === 'right' ? ' dot-right' : ''));
+		    $info_cls = $info_position === 'top' ? ' info-top' : ($info_position === 'bottom' ? ' info-bottom' : '');
+		    $icon_cls = $icon_position === 'bottom' ? ' icon-bottom' : ($icon_position === 'top' ? ' icon-top' : '');
+		    $iconalign_cls = $icon_alignment === 'left' ? ' iconalign-left' : ($icon_alignment === 'center' ? ' iconalign-center' : '');
+		    $items_cls = $gallery_item === 'three' ? ' data-items="3"' : ($gallery_item === 'four' ? ' data-items="4"' : '');
 
-			if ($dot_position === 'top'){
-			  $dot_cls = ' dot-top';
-			} elseif ($dot_position === 'left'){
-			  $dot_cls = ' dot-left';
-			} elseif ($dot_position === 'right'){
-			  $dot_cls = ' dot-right';
-			} else {
-			  $dot_cls = '';
-			}
+		    // Start output
+		    $output = '<div class="nacep-gallery"><div class="masonry-wrap">';
 
-			if ($info_position === 'top'){
-			  $info_cls = ' info-top';
-			} elseif ($info_position === 'bottom'){
-			  $info_cls = ' info-bottom';
-			} else {
-			  $info_cls = '';
-			}
+		    // Filter Section
+		    if ($need_filter) {
+		        $output .= '<div class="masonry-filters' . esc_attr($dot_cls) . '">
+		                        <ul>
+		                            <li><a href="javascript:void(0);" data-filter="*" class="active">' . ucwords($gallery_all_filter) . '</a></li>';
 
-			if ($icon_position === 'bottom') {
-			  $icon_cls = ' icon-bottom';
-			} elseif ($icon_position === 'top') {
-			  $icon_cls = ' icon-top';
-			} else {
-			  $icon_cls = '';
-			}
+		        // Group Param Output
+		        if (is_array($GalleryFilter_groups) && !empty($GalleryFilter_groups)) {
+		            foreach ($GalleryFilter_groups as $each_filter) {
+		                $gallery_filter = !empty($each_filter['gallery_filter']) ? esc_html($each_filter['gallery_filter']) : '';
+		                if ($gallery_filter) {
+		                    $output .= '<li><a href="javascript:void(0);" data-filter=".' . preg_replace('/\s+/', "", strtolower($gallery_filter)) . '">' . ucwords($gallery_filter) . '</a></li>';
+		                }
+		            }
+		        }
 
-			if ($icon_alignment === 'left'){
-			  $iconalign_cls = ' iconalign-left';
-			} elseif ($icon_alignment === 'center'){
-			  $iconalign_cls = ' iconalign-center';
-			} else {
-			  $iconalign_cls = '';
-			}
+		        $output .= '</ul></div>'; // Close filter list
+		    }
 
-			if ($gallery_item === 'three'){
-			  $items_cls = ' data-items="3"';
-			} elseif ($gallery_item === 'four'){
-			  $items_cls = ' data-items="4"';
-			} else {
-			  $items_cls = '';
-			}
+		    // Gallery Items Section
+		    $output .= '<div class="nacep-masonry"' . $items_cls . '>';
+		    if (is_array($GalleryItems_groups) && !empty($GalleryItems_groups)) {
+		        foreach ($GalleryItems_groups as $each_value) {
+		            // Extract and sanitize necessary values
+		            $height = !empty($each_value['img_max_height']['size']) ? esc_attr($each_value['img_max_height']['size']) : '';
+		            $unit = !empty($each_value['img_max_height']['unit']) ? esc_attr($each_value['img_max_height']['unit']) : '';
+		            $filter_cat = !empty($each_value['filter_cat']) ? esc_html($each_value['filter_cat']) : '';
+		            $gallery_col = !empty($each_value['gallery_col']) ? esc_attr($each_value['gallery_col']) : '';
+		            $gallery_image = !empty($each_value['gallery_image']['id']) ? $each_value['gallery_image']['id'] : '';
+		            $image_link = !empty($each_value['image_link']['url']) ? esc_url($each_value['image_link']['url']) : '';
+		            $gallery_link = !empty($each_value['gallery_link']['url']) ? esc_url($each_value['gallery_link']['url']) : '';
+		            $gallery_title = !empty($each_value['gallery_title']) ? esc_html($each_value['gallery_title']) : '';
+		            $gallery_subtitle = !empty($each_value['gallery_subtitle']) ? esc_html($each_value['gallery_subtitle']) : '';
+		            $popup_icon = !empty($each_value['popup_icon']) ? esc_attr($each_value['popup_icon']) : '';
+		            $need_hover = !empty($each_value['need_hover']) ? $each_value['need_hover'] : '';
+		            $need_popup = !empty($each_value['need_popup']) ? $each_value['need_popup'] : '';
 
-		  $output = '<div class="nacep-gallery"><div class="masonry-wrap">';
-		  if ($need_filter) {
-			$output .= '<div class="masonry-filters'.esc_attr($dot_cls).'">
-				            <ul>
-				              <li><a href="javascript:void(0);" data-filter="*" class="active">'.ucwords($gallery_all_filter).'</a></li>';
+		            // Determine classes based on options
+		            $style_class = !empty($each_value['info_style']) && $each_value['info_style'] === 'two' ? ' style-two' : ' style-one';
+		            $hover_class = $need_hover ? ' zoom-image' : '';
+		            $popup_class = $need_popup ? ' nacep-popup' : '';
 
-										  // Group Param Output
-											if ( is_array( $GalleryFilter_groups ) && !empty( $GalleryFilter_groups ) ){
-											  foreach ( $GalleryFilter_groups as $each_filter ) {
+		            // Get image URL
+		            $image_url = wp_get_attachment_url($gallery_image);
+		            $max_height = $height ? ' style="max-height: ' . esc_attr($height) . esc_attr($unit) . ';"' : '';
 
-													$gallery_filter = $each_filter['gallery_filter'] ? $each_filter['gallery_filter'] : '';
-													$filter = $gallery_filter ? '<li><a href="javascript:void(0);" data-filter=".'. preg_replace('/\s+/', "", strtolower($gallery_filter)) .'">'.ucwords($gallery_filter).'</a></li>' : '';
-												  $output .= $filter;
-											  }
-											}
-				$output .= '</ul>
-		          	</div>';
-		  }
-			$output .= '<div class="nacep-masonry"'.$items_cls.'>';
-			// Group Param Output
-			if ( is_array( $GalleryItems_groups ) && !empty( $GalleryItems_groups ) ){
-			  foreach ( $GalleryItems_groups as $each_value ) {
+		            // Title and Subtitle
+		            $subtitle = $gallery_subtitle ? '<h4 class="gallery-subtitle">' . $subtitle . '</h4>' : '';
+		            $link = $gallery_link ? '<a href="' . $gallery_link . '" ' . $gallery_link_attr . '>' . $gallery_title . '</a>' : $gallery_title;
+		            $title = $gallery_title ? '<h2 class="gallery-title">' . $link . '</h2>' : '';
 
-					$height = $each_value['img_max_height']['size'] ? $each_value['img_max_height']['size'] : '';
-					$unit = $each_value['img_max_height']['unit'] ? $each_value['img_max_height']['unit'] : '';
-					$filter_cat = $each_value['filter_cat'] ? $each_value['filter_cat'] : '';
-					$gallery_col = !empty( $each_value['gallery_col'] ) ? $each_value['gallery_col'] : '';
-					$gallery_image = !empty( $each_value['gallery_image']['id'] ) ? $each_value['gallery_image']['id'] : '';
-					$image_link = !empty( $each_value['image_link']['url'] ) ? $each_value['image_link']['url'] : '';
-					$image_link_external = !empty( $each_value['image_link']['is_external'] ) ? 'target="_blank"' : '';
-					$image_link_nofollow = !empty( $each_value['image_link']['nofollow'] ) ? 'rel="nofollow"' : '';
-					$image_link_attr = !empty( $image_link ) ?  $image_link_external.' '.$image_link_nofollow : '';
+		            // Icon HTML
+		            $icon = $popup_icon ? '<i class="' . esc_attr($popup_icon) . '" aria-hidden="true"></i>' : '';
+		            $image_pop = $need_popup && $image_url ? '<a href="' . esc_url($image_url) . '" class="pp-icon">' . $icon . '</a>' : '';
+		            $icon_link = !empty($each_value['icon_link']['url']) ? '<a href="' . esc_url($each_value['icon_link']['url']) . '" class="pp-icon">' . $icon . '</a>' : '';
+		            $icon_popup = !empty($each_value['pop_icon_style']) && $each_value['pop_icon_style'] === 'two' ? $icon_link : $image_pop;
 
-					$gallery_title = $each_value['gallery_title'] ? $each_value['gallery_title'] : '';
-					$gallery_link = !empty( $each_value['gallery_link']['url'] ) ? $each_value['gallery_link']['url'] : '';
-					$gallery_link_external = !empty( $each_value['gallery_link']['is_external'] ) ? 'target="_blank"' : '';
-					$gallery_link_nofollow = !empty( $each_value['gallery_link']['nofollow'] ) ? 'rel="nofollow"' : '';
-					$gallery_link_attr = !empty( $gallery_link ) ?  $gallery_link_external.' '.$gallery_link_nofollow : '';
+		            // Link Image
+		            $link_image = $image_link ? '<a href="' . esc_url($image_link) . '" ' . $image_link_attr . '><img src="' . esc_url($image_url) . '" alt="' . esc_attr($gallery_title) . '"></a>' : '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($gallery_title) . '">';
+		            $image = $image_url ? '<div class="nacep-image' . esc_attr($popup_class) . '"' . $max_height . '>' . $link_image . $icon_popup . '</div>' : '';
 
-					$gallery_subtitle = $each_value['gallery_subtitle'] ? $each_value['gallery_subtitle'] : '';
+		            // Category and Output
+		            $category = $filter_cat ? ' data-category="' . str_replace(', ', " ", strtolower($filter_cat)) . '"' : '';
+		            $category_class = $filter_cat ? ' ' . str_replace(', ', " ", strtolower($filter_cat)) : '';
 
-					$info_style = !empty( $each_value['info_style'] ) ? $each_value['info_style'] : '';
-					$need_hover = !empty( $each_value['need_hover'] ) ? $each_value['need_hover'] : '';
-					$need_popup = !empty( $each_value['need_popup'] ) ? $each_value['need_popup'] : '';
-					$popup_icon = !empty( $each_value['popup_icon'] ) ? $each_value['popup_icon'] : '';
-					$pop_icon_style = !empty( $each_value['pop_icon_style'] ) ? $each_value['pop_icon_style'] : '';
-					$icon_link = !empty( $each_value['icon_link']['url'] ) ? $each_value['icon_link']['url'] : '';
-					$icon_link_external = !empty( $each_value['icon_link']['is_external'] ) ? 'target="_blank"' : '';
-					$icon_link_nofollow = !empty( $each_value['icon_link']['nofollow'] ) ? 'rel="nofollow"' : '';
-					$icon_link_attr = !empty( $icon_link ) ?  $icon_link_external.' '.$icon_link_nofollow : '';
+		            $output .= '<div class="masonry-item' . esc_attr($category_class) . ' ' . esc_attr($gallery_col) . '"' . $category . '>
+		                            <div class="nacep-gallery-item' . esc_attr($hover_class) . esc_attr($info_cls) . esc_attr($style_class) . esc_attr($icon_cls) . esc_attr($iconalign_cls) . '">
+		                                ' . $image . '
+		                                <div class="gallery-info">' . $title . $subtitle . '</div>
+		                            </div>
+		                        </div>'; // Close masonry-item
+		        }
+		    }
 
-					if ($info_style === 'two') {
-						$style_class = ' style-two';
-					} else {
-						$style_class = ' style-one';
-					}
-
-					if ($need_hover) {
-						$hover_class = ' zoom-image';
-					} else {
-						$hover_class = '';
-					}
-
-					if ($need_popup) {
-						$popup_class = ' nacep-popup';
-					} else {
-						$popup_class = '';
-					}
-
-					$image_url = wp_get_attachment_url( $gallery_image );
-
-					$subtitle = $gallery_subtitle ? '<h4 class="gallery-subtitle">'.esc_html($gallery_subtitle).'</h4>' : '';
-
-					$link = $gallery_link ? '<a href="'.esc_url($gallery_link).'" '.$gallery_link_attr.'>'.esc_html($gallery_title).'</a>' : $gallery_title;
-					$title = $gallery_title ? '<h2 class="gallery-title">'.$link.'</h2>' : '';
-
-					$icon = $popup_icon ? '<i class="'.esc_attr($popup_icon).'" aria-hidden="true"></i>' : '';
-
-					$image_pop = ($need_popup && $image_url) ? '<a href="'. esc_url($image_url) .'" class="pp-icon">'.$icon.'</a>' : '';
-					$icon_link = $icon_link ? '<a href="'.esc_url($icon_link).'" '.$icon_link_attr.' class="pp-icon">'.$icon.'</a>' : '';
-
-					if ($pop_icon_style === 'two') {
-						$icon_popup = $icon_link;
-					} else {
-						$icon_popup = $image_pop;
-					}
-
-					$link_image = $image_link ? '<a href="'.esc_url($image_link).'" '.$image_link_attr.'><img src="'.esc_url($image_url).'" alt="'.esc_attr($gallery_title).'"></a>' : '<img src="'.esc_url($image_url).'" alt="'.esc_attr($gallery_title).'">';
-
-					$max_height = $height ? ' style="max-height: '.esc_attr( $height ).esc_attr( $unit ).';"' : '';
-
-					$image = $image_url ? '<div class="nacep-image'.esc_attr($popup_class).'"'.$max_height.'>'.$link_image.$icon_popup.'</div>' : '';
-
-					$category = $filter_cat ? ' data-category="'. str_replace(', ', " ", strtolower($filter_cat)) .'"' : '';
-					$category_class = $filter_cat ? ' '.str_replace(', ', " ", strtolower($filter_cat)) : '';
-
-				  $output .= '<div class="masonry-item'.esc_attr( $category_class ).' '.esc_attr( $gallery_col ).'"'.$category.'>
-				  							<div class="nacep-gallery-item'.esc_attr( $hover_class ).esc_attr( $info_cls ).esc_attr( $style_class ).esc_attr( $icon_cls ).esc_attr( $iconalign_cls ).'">
-				  								'.$image.'
-				  								<div class="gallery-info">'.$title.$subtitle.'</div>
-				  							</div>
-			  							</div>';
-			  }
-			}
-
-			$output .= '</div></div></div>';
-
-			echo $output;
-
+		    $output .= '</div></div></div>'; // Close all opened divs
+		    echo $output;
 		}
 
 	}

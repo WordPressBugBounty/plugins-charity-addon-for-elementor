@@ -1826,11 +1826,11 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 
 			// Carousel Data's
 			$carousel_loop = $carousel_loop !== 'true' ? ' data-loop="true"' : ' data-loop="false"';
-			$carousel_autoplay_timeout = $carousel_autoplay_timeout ? ' data-swiper-autoplay='. $carousel_autoplay_timeout .'' : ' data-swiper-autoplay=5000';
-			$carousel_speed = $carousel_speed ? ' data-speed="'. $carousel_speed .'"' : ' data-speed="1000"';
+			$carousel_autoplay_timeout = $carousel_autoplay_timeout ? ' data-swiper-autoplay='. esc_attr($carousel_autoplay_timeout) .'' : ' data-swiper-autoplay=5000';
+			$carousel_speed = $carousel_speed ? ' data-speed="'. esc_attr($carousel_speed) .'"' : ' data-speed="1000"';
 			$carousel_autoplay = $carousel_autoplay ? ' data-autoplay="true"' : ' data-autoplay="false"';
 			$clickable_pagi = $clickable_pagi ? 'data-clickpage="true"' : '';
-			$carousel_effect = (isset($settings['carousel_effect'])) ? ' data-effect="'.$carousel_effect.'"' : '';
+			$carousel_effect = (isset($settings['carousel_effect'])) ? ' data-effect="'.esc_attr($carousel_effect).'"' : '';
 			$carousel_mousedrag = $carousel_mousedrag !== 'true' ? ' data-mousedrag="true"' : ' data-mousedrag="false"';
 
 			$content_entrance_animation = !empty( $settings['content_entrance_animation'] ) ? $settings['content_entrance_animation'] : '';
@@ -1844,17 +1844,17 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 			$button_entrance_animation = $button_entrance_animation ? $button_entrance_animation : 'fadeInDown';
 			$box_entrance_animation = $box_entrance_animation ? $box_entrance_animation : 'fadeInDown';
 
-			$bar_color 				= !empty( $settings['bar_color'] ) ? $settings['bar_color'] : '';
+			$bar_color 			= !empty( $settings['bar_color'] ) ? $settings['bar_color'] : '';
 			$bar_fill_color 	= !empty( $settings['bar_fill_color'] ) ? $settings['bar_fill_color'] : '';
-			$reverse 				  = !empty( $settings['reverse'] ) ? $settings['reverse'] : '';
-			$size 						= !empty( $settings['size'] ) ? $settings['size'] : '';
-			$thickness 						= !empty( $settings['thickness'] ) ? $settings['thickness'] : '';
+			$reverse 			= !empty( $settings['reverse'] ) ? $settings['reverse'] : '';
+			$size 				= !empty( $settings['size'] ) ? $settings['size'] : '';
+			$thickness 			= !empty( $settings['thickness'] ) ? $settings['thickness'] : '';
 
-			$bar_color = $bar_color ? ' data-color="'.$bar_color.'"' : '';
-			$bar_fill_color = $bar_fill_color ? ' data-fill="'.$bar_fill_color.'"' : '';
+			$bar_color = $bar_color ? ' data-color="'.esc_attr($bar_color).'"' : '';
+			$bar_fill_color = $bar_fill_color ? ' data-fill="'.esc_attr($bar_fill_color).'"' : '';
 			$reverse = $reverse ? ' data-reverse="true"' : ' data-reverse="false"';
-			$size = $size ? ' data-size="'.$size.'"' : '';
-			$thickness = $thickness ? ' data-thickness="'.$thickness.'"' : '';
+			$size = $size ? ' data-size="'.esc_attr($size).'"' : '';
+			$thickness = $thickness ? ' data-thickness="'.esc_attr($thickness).'"' : '';
 
 			// Turn output buffer on
 			ob_start();

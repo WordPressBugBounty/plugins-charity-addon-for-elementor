@@ -5,8 +5,8 @@ Plugin URI: https://nicheaddons.com/demos/charity/
 Tags: elementor, addons, charity, donation, campaign, cause, elementor widget, elementor extensions, elements
 Requires PHP: 7.0
 Requires at least: 6.0
-Tested up to: 6.6.2
-Stable tag: 1.3.2
+Tested up to: 6.7.1
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -130,6 +130,10 @@ No, it'll not work without Elementor Page Builder, it's an addon for Elementor.
 
 
 == Changelog ==
+
+= 1.3.3
+
+* Security improvements
 
 = 1.3.2
 

@@ -798,66 +798,41 @@ class Charity_Elementor_Addon_Team extends Widget_Base{
 	*/
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-		$hover_style = !empty( $settings['hover_style'] ) ? $settings['hover_style'] : '';
-		$hover_effect = !empty( $settings['hover_effect'] ) ? $settings['hover_effect'] : '';
-		$team_image = !empty( $settings['team_image']['id'] ) ? $settings['team_image']['id'] : '';
-		$image_link = !empty( $settings['image_link']['url'] ) ? $settings['image_link']['url'] : '';
+		$hover_style = !empty( $settings['hover_style'] ) ? esc_attr($settings['hover_style']) : '';
+		$hover_effect = !empty( $settings['hover_effect'] ) ? esc_attr($settings['hover_effect']) : '';
+		$team_image = !empty( $settings['team_image']['id'] ) ? intval($settings['team_image']['id']) : '';
+		$image_link = !empty( $settings['image_link']['url'] ) ? esc_url($settings['image_link']['url']) : '';
 		$image_link_external = !empty( $settings['image_link']['is_external'] ) ? 'target="_blank"' : '';
 		$image_link_nofollow = !empty( $settings['image_link']['nofollow'] ) ? 'rel="nofollow"' : '';
-		$image_link_attr = !empty( $image_link ) ?  $image_link_external.' '.$image_link_nofollow : '';
-		$team_title = !empty( $settings['team_title'] ) ? $settings['team_title'] : '';
-		$team_title_link = !empty( $settings['team_title_link']['url'] ) ? $settings['team_title_link']['url'] : '';
+		$image_link_attr = !empty( $image_link ) ? esc_attr($image_link_external . ' ' . $image_link_nofollow) : '';
+		$team_title = !empty( $settings['team_title'] ) ? esc_html($settings['team_title']) : '';
+		$team_title_link = !empty( $settings['team_title_link']['url'] ) ? esc_url($settings['team_title_link']['url']) : '';
 		$team_title_link_external = !empty( $settings['team_title_link']['is_external'] ) ? 'target="_blank"' : '';
 		$team_title_link_nofollow = !empty( $settings['team_title_link']['nofollow'] ) ? 'rel="nofollow"' : '';
-		$team_title_link_attr = !empty( $team_title_link ) ?  $team_title_link_external.' '.$team_title_link_nofollow : '';
-		$team_subtitle = !empty( $settings['team_subtitle'] ) ? $settings['team_subtitle'] : '';
-		$team_content = !empty( $settings['team_content'] ) ? $settings['team_content'] : '';
-		$listItems_groups = !empty( $settings['listItems_groups'] ) ? $settings['listItems_groups'] : '';
-		$icon_alignment = !empty( $settings['icon_alignment'] ) ? $settings['icon_alignment'] : '';
-		$icon_position = !empty( $settings['icon_position'] ) ? $settings['icon_position'] : '';
-		$image_hover = !empty( $settings['image_hover'] ) ? $settings['image_hover'] : '';
+		$team_title_link_attr = !empty( $team_title_link ) ? esc_attr($team_title_link_external . ' ' . $team_title_link_nofollow) : '';
+		$team_subtitle = !empty( $settings['team_subtitle'] ) ? esc_html($settings['team_subtitle']) : '';
+		$team_content = !empty( $settings['team_content'] ) ? esc_html($settings['team_content']) : '';
+		$listItems_groups = !empty( $settings['listItems_groups'] ) ? $settings['listItems_groups'] : [];
+		$icon_alignment = !empty( $settings['icon_alignment'] ) ? esc_attr($settings['icon_alignment']) : '';
+		$icon_position = !empty( $settings['icon_position'] ) ? esc_attr($settings['icon_position']) : '';
+		$image_hover = !empty( $settings['image_hover'] ) ? esc_attr($settings['image_hover']) : '';
 
-		// Image
-		$image_url = wp_get_attachment_url( $team_image );
+		$image_url = wp_get_attachment_url($team_image);
 
 		$title_link = $team_title_link ? '<a href="'.esc_url($team_title_link).'" '.$team_title_link_attr.'>'.esc_html($team_title).'</a>' : esc_html($team_title);
 		$title = $team_title ? '<h3 class="team-title">'.$title_link.'</h3>' : '';
 		$subtitle = $team_subtitle ? '<span>'.esc_html($team_subtitle).'</span>' : '';
 		$content = $team_content ? '<p>'.esc_html($team_content).'</p>' : '';
 
-		if ($hover_style === 'two') {
-			$style_class = ' style-two';
-		} elseif ($hover_style === 'three') {
-			$style_class = ' style-three';
-		} else {
-			$style_class = '';
-		}
-		if ($hover_effect) {
-			$hover_class = ' icon-vert';
-		} else {
-			$hover_class = '';
-		}
-		if ($image_hover) {
-			$img_hover = ' zoom-image';
-		} else {
-			$img_hover = '';
-		}
-		if ($icon_alignment === 'right') {
-			$align_class = ' icon-right';
-		} else {
-			$align_class = '';
-		}
-		if ($icon_position === 'top') {
-			$pos_class = ' pos-top';
-		} elseif ($icon_position === 'bottom') {
-			$pos_class = ' pos-bottom';
-		} else {
-			$pos_class = '';
-		}
-		// Turn output buffer on
+		$style_class = ($hover_style === 'two') ? ' style-two' : (($hover_style === 'three') ? ' style-three' : '');
+		$hover_class = $hover_effect ? ' icon-vert' : '';
+		$img_hover = $image_hover ? ' zoom-image' : '';
+		$align_class = ($icon_alignment === 'right') ? ' icon-right' : '';
+		$pos_class = ($icon_position === 'top') ? ' pos-top' : (($icon_position === 'bottom') ? ' pos-bottom' : '');
+
 		ob_start(); ?>
 
-		<div class="nacep-team-item<?php echo esc_attr($style_class.$img_hover); ?>">
+		<div class="nacep-team-item<?php echo esc_attr($style_class . $img_hover); ?>">
 			<?php if ($team_image) { ?>
 				<div class="nacep-image">
 					<?php if ($image_link) { ?>
@@ -865,61 +840,46 @@ class Charity_Elementor_Addon_Team extends Widget_Base{
 					<?php } else { ?>
 						<img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($team_title); ?>">
 					<?php } if ($hover_style === 'three') { ?>
-						<div class="nacep-social rounded<?php echo esc_attr($hover_class.$align_class.$pos_class); ?>">
-						<?php
-						// Group Param Output
-						if ( is_array( $listItems_groups ) && !empty( $listItems_groups ) ){
-						  foreach ( $listItems_groups as $each_list ) {
+						<div class="nacep-social rounded<?php echo esc_attr($hover_class . $align_class . $pos_class); ?>">
+						<?php foreach ($listItems_groups as $each_list) {
+							$icon_link = !empty($each_list['icon_link']) ? $each_list['icon_link'] : [];
+							$link_url = !empty($icon_link['url']) ? esc_url($icon_link['url']) : '';
+							$link_external = !empty($icon_link['is_external']) ? 'target="_blank"' : '';
+							$link_nofollow = !empty($icon_link['nofollow']) ? 'rel="nofollow"' : '';
+							$link_attr = $link_url ? esc_attr($link_external . ' ' . $link_nofollow) : '';
+							$social_icon = !empty($each_list['social_icon']) ? esc_attr($each_list['social_icon']) : ''; ?>
 
-						  $icon_link = !empty( $each_list['icon_link'] ) ? $each_list['icon_link'] : '';
-							$link_url = !empty( $icon_link['url'] ) ? esc_url($icon_link['url']) : '';
-							$link_external = !empty( $icon_link['is_external'] ) ? 'target="_blank"' : '';
-							$link_nofollow = !empty( $icon_link['nofollow'] ) ? 'rel="nofollow"' : '';
-							$link_attr = !empty( $icon_link['url'] ) ?  $link_external.' '.$link_nofollow : '';
-						  $social_icon = !empty( $each_list['social_icon'] ) ? $each_list['social_icon'] : '';
-							$icon = $social_icon ? '<i class="'.esc_attr($social_icon).'" aria-hidden="true"></i>' : '';
-				   		?>
-
-						  <a href="<?php echo esc_url($link_url); ?>" <?php echo $link_attr; ?>>
-								<?php echo $icon; ?>
-						  </a>
-
-						<?php } } ?>
+							<a href="<?php echo esc_url($link_url); ?>" <?php echo $link_attr; ?>>
+								<i class="<?php echo $social_icon; ?>" aria-hidden="true"></i>
+							</a>
+						<?php } ?>
 						</div>
 					<?php } ?>
 				</div>
 			<?php } ?>
 			<div class="mate-info">
-				<?php echo $title.$subtitle.$content;
+				<?php echo $title . $subtitle . $content;
 				if ($hover_style !== 'three') { ?>
 				<div class="nacep-social rounded">
-					<?php
-					// Group Param Output
-					if ( is_array( $listItems_groups ) && !empty( $listItems_groups ) ){
-					  foreach ( $listItems_groups as $each_list ) {
+					<?php foreach ($listItems_groups as $each_list) {
+						$icon_link = !empty($each_list['icon_link']) ? $each_list['icon_link'] : [];
+						$link_url = !empty($icon_link['url']) ? esc_url($icon_link['url']) : '';
+						$link_external = !empty($icon_link['is_external']) ? 'target="_blank"' : '';
+						$link_nofollow = !empty($icon_link['nofollow']) ? 'rel="nofollow"' : '';
+						$link_attr = $link_url ? esc_attr($link_external . ' ' . $link_nofollow) : '';
+						$social_icon = !empty($each_list['social_icon']) ? esc_attr($each_list['social_icon']) : ''; ?>
 
-					  $icon_link = !empty( $each_list['icon_link'] ) ? $each_list['icon_link'] : '';
-						$link_url = !empty( $icon_link['url'] ) ? esc_url($icon_link['url']) : '';
-						$link_external = !empty( $icon_link['is_external'] ) ? 'target="_blank"' : '';
-						$link_nofollow = !empty( $icon_link['nofollow'] ) ? 'rel="nofollow"' : '';
-						$link_attr = !empty( $icon_link['url'] ) ?  $link_external.' '.$link_nofollow : '';
-					  $social_icon = !empty( $each_list['social_icon'] ) ? $each_list['social_icon'] : '';
-						$icon = $social_icon ? '<i class="'.esc_attr($social_icon).'" aria-hidden="true"></i>' : '';
-			   		?>
-
-					  <a href="<?php echo esc_url($link_url); ?>" <?php echo $link_attr; ?>>
-							<?php echo $icon; ?>
-					  </a>
-
-					<?php } } ?>
+						<a href="<?php echo esc_url($link_url); ?>" <?php echo $link_attr; ?>>
+							<i class="<?php echo $social_icon; ?>" aria-hidden="true"></i>
+						</a>
+					<?php } ?>
 				</div>
 				<?php } ?>
 			</div>
 		</div>
 		<?php
-		// Return outbut buffer
-		echo ob_get_clean();
 
+		echo ob_get_clean();
 	}
 
 }

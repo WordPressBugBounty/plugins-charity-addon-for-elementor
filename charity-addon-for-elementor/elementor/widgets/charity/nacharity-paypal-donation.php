@@ -203,10 +203,10 @@ if ( is_plugin_active( 'paypal-donations/paypal-donations.php' ) ) {
 			$purpose 	= !empty( $settings['purpose'] ) ? $settings['purpose'] : '';
 			$reference 	= !empty( $settings['reference'] ) ? $settings['reference'] : '';
 
-			$title = $title ? '<h3 class="donation-title">'.$title.'</h3>' : '';
-			$text = $text ? '<p>'.$text.'</p>' : '';
-			$purpose = $purpose ? ' purpose="'.$purpose.'"' : '';
-			$reference = $reference ? ' reference="'.$reference.'"' : '';
+			$title = $title ? '<h3 class="donation-title">' . esc_html($title) . '</h3>' : '';
+			$text = $text ? '<p>' . esc_html($text) . '</p>' : '';
+			$purpose = $purpose ? ' purpose="' . esc_attr($purpose) . '"' : '';
+			$reference = $reference ? ' reference="' . esc_attr($reference) . '"' : '';
 
 	  	$output = '<div class="nacep-paypal-donation">'.$title.$text.do_shortcode( '[paypal-donation'.$purpose.$reference.']' ).'</div>';
 

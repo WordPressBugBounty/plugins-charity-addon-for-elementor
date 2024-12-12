@@ -509,30 +509,30 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 		 * Written in PHP and used to generate the final HTML.
 		*/
 		protected function render() {
-			$settings = $this->get_settings_for_display();
+		    $settings = $this->get_settings_for_display();
 
-			$form_id 				= !empty( $settings['form_id'] ) ? $settings['form_id'] : '';
-			$show_title 				= !empty( $settings['show_title'] ) ? $settings['show_title'] : '';
-			$show_goal 	= !empty( $settings['show_goal'] ) ? $settings['show_goal'] : '';
-			$show_content 	= !empty( $settings['show_content'] ) ? $settings['show_content'] : '';
-			$display_style = !empty( $settings['display_style'] ) ? $settings['display_style'] : '';
-			$continue_button_title 				= !empty( $settings['continue_button_title'] ) ? $settings['continue_button_title'] : '';
+		    $form_id = !empty($settings['form_id']) ? $settings['form_id'] : '';
+		    $show_title = !empty($settings['show_title']) ? $settings['show_title'] : '';
+		    $show_goal = !empty($settings['show_goal']) ? $settings['show_goal'] : '';
+		    $show_content = !empty($settings['show_content']) ? $settings['show_content'] : '';
+		    $display_style = !empty($settings['display_style']) ? $settings['display_style'] : '';
+		    $continue_button_title = !empty($settings['continue_button_title']) ? $settings['continue_button_title'] : '';
 
-			$show_title = $show_title ? 'true' : 'false';
-			$show_goal = $show_goal ? 'true' : 'false';
+		    $show_title = $show_title ? 'true' : 'false';
+		    $show_goal = $show_goal ? 'true' : 'false';
 
-			$form_id 					   = $form_id ? ' id="'.$form_id.'"' : '';
-			$show_title 	 	 = $show_title ? ' show_title="'.$show_title.'"' : '';
-			$show_goal 	 		 = $show_goal ? ' show_goal="'.$show_goal.'"' : '';
-			$show_content 	 = $show_content ? ' show_content="'.$show_content.'"' : '';
-			$display_style   = $display_style ? ' display_style="'.$display_style.'"' : '';
-			$continue_button_title 	 		 = $continue_button_title ? ' continue_button_title="'.$continue_button_title.'"' : '';
+		    $form_id = $form_id ? ' id="' . esc_attr($form_id) . '"' : '';
+		    $show_title = $show_title ? ' show_title="' . esc_attr($show_title) . '"' : '';
+		    $show_goal = $show_goal ? ' show_goal="' . esc_attr($show_goal) . '"' : '';
+		    $show_content = $show_content ? ' show_content="' . esc_attr($show_content) . '"' : '';
+		    $display_style = $display_style ? ' display_style="' . esc_attr($display_style) . '"' : '';
+		    $continue_button_title = $continue_button_title ? ' continue_button_title="' . esc_attr($continue_button_title) . '"' : '';
 
-			$output = '';
-	  	$output .= '<div class="nacep-give-form">'.do_shortcode( '[give_form'. $form_id . $show_title . $show_goal . $show_content . $display_style . $continue_button_title .']' ).'</div>';
+		    $output = '<div class="nacep-give-form">'
+		        . do_shortcode('[give_form' . $form_id . $show_title . $show_goal . $show_content . $display_style . $continue_button_title . ']')
+		        . '</div>';
 
-		  echo $output;
-
+		    echo wp_kses_post($output);
 		}
 
 	}

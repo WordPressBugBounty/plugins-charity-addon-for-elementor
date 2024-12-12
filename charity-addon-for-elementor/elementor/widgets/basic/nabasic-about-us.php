@@ -804,7 +804,7 @@ class Charity_Elementor_Addon_AboutUs extends Widget_Base{
 		$title_link = $aboutus_title_link ? '<a href="'.esc_url($aboutus_title_link).'" '.$aboutus_title_link_attr.'>'.esc_html($aboutus_title).'</a>' : esc_html($aboutus_title);
 		$title = $aboutus_title ? '<h3 class="aboutus-title">'.$title_link.'</h3>' : '';
 		$subtitle = $aboutus_subtitle ? '<h5>'.esc_html($aboutus_subtitle).'</h5>' : '';
-		$content = $aboutus_content ? $aboutus_content : '';
+		$content = $aboutus_content ? wp_kses_post( $aboutus_content ) : '';
 		$aboutus_btn = $aboutus_btn_link ? '<div class="nacep-link-wrap"><a href="'.esc_url($aboutus_btn_link).'" class="nacep-link" '.$aboutus_btn_link_attr.'>'.esc_html($aboutus_btn_text).'</a></div>' : '';
 
 		$output = '<div class="nacep-aboutus-item">

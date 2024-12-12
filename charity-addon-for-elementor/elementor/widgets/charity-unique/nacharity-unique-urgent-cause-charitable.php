@@ -1081,13 +1081,13 @@ if ( is_plugin_active( 'charitable/charitable.php' ) ) {
 		 * Written in PHP and used to generate the final HTML.
 		*/
 		protected function render() {
-			$settings = $this->get_settings_for_display();
+			$settings 				= $this->get_settings_for_display();
 			$cause_id 				= !empty( $settings['cause_id'] ) ? $settings['cause_id'] : '';
 			$sub_title 				= !empty( $settings['sub_title'] ) ? $settings['sub_title'] : '';
-			$need_content 				= !empty( $settings['need_content'] ) ? $settings['need_content'] : '';
+			$need_content 			= !empty( $settings['need_content'] ) ? $settings['need_content'] : '';
 			$btn_text 				= !empty( $settings['btn_text'] ) ? $settings['btn_text'] : '';
-			$btn_icon         = !empty( $settings['btn_icon'] ) ? $settings['btn_icon'] : '';
-			$icon = $btn_icon ? ' <i class="'.$btn_icon.'" aria-hidden="true"></i>' : '';
+			$btn_icon         		= !empty( $settings['btn_icon'] ) ? $settings['btn_icon'] : '';
+			$icon 					= $btn_icon ? ' <i class="'.esc_attr( $btn_icon ).'" aria-hidden="true"></i>' : '';
 
 			$count_type = !empty( $settings['count_type'] ) ? $settings['count_type'] : '';
 			$count_date_static = !empty( $settings['count_date_static'] ) ? $settings['count_date_static'] : '';
@@ -1129,19 +1129,18 @@ if ( is_plugin_active( 'charitable/charitable.php' ) ) {
 			$label_minute = $label_minute ? esc_html($label_minute) : esc_html__('Minute','charity-addon-for-elementor');
 			$label_second = $label_second ? esc_html($label_second) : esc_html__('Second','charity-addon-for-elementor');
 
-			$bar_color 				= !empty( $settings['bar_color'] ) ? $settings['bar_color'] : '';
-			$bar_fill_color 	= !empty( $settings['bar_fill_color'] ) ? $settings['bar_fill_color'] : '';
-			$reverse 				  = !empty( $settings['reverse'] ) ? $settings['reverse'] : '';
-			$size 						= !empty( $settings['size'] ) ? $settings['size'] : '';
-			$thickness 						= !empty( $settings['thickness'] ) ? $settings['thickness'] : '';
-			$start_angle 						= !empty( $settings['start_angle'] ) ? $settings['start_angle'] : '';
+			$bar_color 		= !empty( $settings['bar_color'] ) ? $settings['bar_color'] : '';
+			$bar_fill_color = !empty( $settings['bar_fill_color'] ) ? $settings['bar_fill_color'] : '';
+			$reverse 		= !empty( $settings['reverse'] ) ? $settings['reverse'] : '';
+			$size 			= !empty( $settings['size'] ) ? $settings['size'] : '';
+			$thickness 		= !empty( $settings['thickness'] ) ? $settings['thickness'] : '';
+			$start_angle 	= !empty( $settings['start_angle'] ) ? $settings['start_angle'] : '';
 
-			$bar_color = $bar_color ? ' data-color="'.$bar_color.'"' : '';
-			$bar_fill_color = $bar_fill_color ? ' data-fill="'.$bar_fill_color.'"' : '';
-			$reverse = $reverse ? ' data-reverse="true"' : ' data-reverse="false"';
-			$size = $size ? ' data-size="'.$size.'"' : '';
-			$thickness = $thickness ? ' data-thickness="'.$thickness.'"' : '';
-			$start_angle = $start_angle ? ' data-start="'.$start_angle.'"' : '';
+			$bar_color 		= $bar_color ? ' data-color="'.esc_attr( $bar_color ).'"' : '';
+			$bar_fill_color = $bar_fill_color ? ' data-fill="'.esc_attr($bar_fill_color ).'"' : '';
+			$size 			= $size ? ' data-size="'.esc_attr($size ).'"' : '';
+			$thickness 		= $thickness ? ' data-thickness="'.esc_attr($thickness ).'"' : '';
+			$start_angle 	= $start_angle ? ' data-start="'.esc_attr($start_angle ).'"' : '';
 
 			$countdown_format = $countdown_format ? $countdown_format : '';
 
@@ -1154,7 +1153,7 @@ if ( is_plugin_active( 'charitable/charitable.php' ) ) {
 			// Turn output buffer on
 			ob_start();
 
-			$cas_args = array(
+		$cas_args = array(
 	      'post_type' => 'campaign',
 	      'posts_per_page' => 1,
 	      'orderby' => 'none',
@@ -1198,7 +1197,7 @@ if ( is_plugin_active( 'charitable/charitable.php' ) ) {
 					<h3 class="donation-title"><a href="<?php echo esc_url( get_permalink() ); ?>"><?php echo esc_html(get_the_title()); ?></a></h3>
 					<?php if ($need_content) { ?><p><?php echo esc_html($campaign->description); ?></p><?php } ?>
 					<div class="nacep-ur-bar">
-						<div class="circle-progressbar-wrap"<?php echo $bar_color . $bar_fill_color . $reverse . $size . $thickness . $start_angle; ?>>
+						<div class="circle-progressbar-wrap" data-reverse="<?php echo esc_attr($reverse); ?>" <?php echo $bar_color . $bar_fill_color . $size . $thickness . $start_angle; ?>>
 							<div class="circle-progressbar" data-value="<?php echo esc_attr($progress); ?>">
                 <h3 class="circle-progressbar-counter"><span class="circle-counter"><?php echo esc_html($progress); ?></span>%</h3>
               </div>

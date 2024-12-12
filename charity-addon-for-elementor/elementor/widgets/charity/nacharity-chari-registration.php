@@ -180,19 +180,20 @@ if ( is_plugin_active( 'charitable/charitable.php' ) ) {
 		 * Written in PHP and used to generate the final HTML.
 		*/
 		protected function render() {
-			$settings = $this->get_settings_for_display();
-			$logged_in_message 	= !empty( $settings['logged_in_message'] ) ? $settings['logged_in_message'] : '';
-			$login_link_text 	= !empty( $settings['login_link_text'] ) ? $settings['login_link_text'] : '';
-			$redirect 	= !empty( $settings['redirect'] ) ? $settings['redirect'] : '';
+		    $settings = $this->get_settings_for_display();
+		    $logged_in_message = !empty($settings['logged_in_message']) ? $settings['logged_in_message'] : '';
+		    $login_link_text = !empty($settings['login_link_text']) ? $settings['login_link_text'] : '';
+		    $redirect = !empty($settings['redirect']) ? $settings['redirect'] : '';
 
-			$logged_in_message = $logged_in_message ? ' logged_in_message="'.$logged_in_message.'"' : '';
-			$login_link_text = $login_link_text ? ' login_link_text="'.$login_link_text.'"' : '';
-			$redirect = $redirect ? ' redirect="'.$redirect.'"' : '';
+		    $logged_in_message = $logged_in_message ? ' logged_in_message="' . esc_attr($logged_in_message) . '"' : '';
+		    $login_link_text = $login_link_text ? ' login_link_text="' . esc_attr($login_link_text) . '"' : '';
+		    $redirect = $redirect ? ' redirect="' . esc_url($redirect) . '"' : '';
 
-	  	$output = '<div class="nacep-charitable-registration nacep-form">'.do_shortcode( '[charitable_registration'. $logged_in_message . $login_link_text . $redirect .']' ).'</div>';
+		    $output = '<div class="nacep-charitable-registration nacep-form">'
+		        . do_shortcode('[charitable_registration' . $logged_in_message . $login_link_text . $redirect . ']')
+		        . '</div>';
 
-		  echo $output;
-
+		    echo wp_kses_post($output);
 		}
 
 	}

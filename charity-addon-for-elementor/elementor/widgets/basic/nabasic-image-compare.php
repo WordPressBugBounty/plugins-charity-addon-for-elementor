@@ -278,40 +278,23 @@ class Charity_Elementor_Addon_ImageCompare extends Widget_Base{
 		$after_url = wp_get_attachment_url( $after_image );
 		$after_title = $settings['after_title'] ? $settings['after_title'] : '';
 
-		$compare_id = uniqid();
-		$id = rand(999, 9999);
-
-	  $output = '<div class="nacep-compare-wrap"><div class="nacep-compare compare-'.esc_attr($compare_id).'-'.esc_attr($id).'"></div></div>';
-
-		echo $output; ?>
-
-		<script type="text/javascript">
-
-	    jQuery(document).ready(function($) {
-
-	    	slider = new juxtapose.JXSlider('.compare-<?php echo esc_attr($compare_id); ?>-<?php echo esc_attr($id); ?>',
-		    [
-	        {
-            src: '<?php echo esc_url($before_url); ?>',
-            label: '<?php echo esc_attr($before_title); ?>',
-	        },
-	        {
-            src: '<?php echo esc_url($after_url); ?>',
-            label: '<?php echo esc_attr($after_title); ?>',
-	        }
-		    ],
-		    {
-	        animate: true,
-	        showLabels: <?php echo esc_attr($title); ?>,
-	        showCredits: false,
-	        startingPosition: "<?php echo esc_attr($starting_position); ?>%",
-	        makeResponsive: true,
-	        mode: "<?php echo esc_attr($compare_style); ?>",
-		    });
-
-	    });
-	  </script>
-	<?php
+	    $compare_id = uniqid();
+	    $id = rand(999, 9999);
+	    $unique_class = 'compare-' . esc_attr($compare_id) . '-' . esc_attr($id);
+	    ?>
+	    
+	    <div class="nacep-compare-wrap">
+	        <div class="nacep-compare <?php echo esc_attr($unique_class); ?>"
+	            data-before-url="<?php echo esc_url($before_url); ?>"
+	            data-before-title="<?php echo esc_attr($before_title); ?>"
+	            data-after-url="<?php echo esc_url($after_url); ?>"
+	            data-after-title="<?php echo esc_attr($after_title); ?>"
+	            data-show-labels="<?php echo esc_attr($title); ?>"
+	            data-starting-position="<?php echo esc_attr($starting_position); ?>"
+	            data-compare-style="<?php echo esc_attr($compare_style); ?>">
+	        </div>
+	    </div>
+	    <?php
 	}
 
 }

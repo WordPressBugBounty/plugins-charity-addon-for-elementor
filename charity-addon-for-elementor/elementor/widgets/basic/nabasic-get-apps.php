@@ -880,92 +880,108 @@ class Charity_Elementor_Addon_GetApps extends Widget_Base{
 	 * Written in PHP and used to generate the final HTML.
 	*/
 	protected function render() {
-		$settings = $this->get_settings_for_display();
-		$apps_title = !empty( $settings['apps_title'] ) ? $settings['apps_title'] : '';
-		$apps_subtitle = !empty( $settings['apps_subtitle'] ) ? $settings['apps_subtitle'] : '';
-		$apps_content = !empty( $settings['apps_content'] ) ? $settings['apps_content'] : '';
+	    $settings = $this->get_settings_for_display();
+	    $apps_title = !empty($settings['apps_title']) ? esc_html($settings['apps_title']) : '';
+	    $apps_subtitle = !empty($settings['apps_subtitle']) ? esc_html($settings['apps_subtitle']) : '';
+	    $apps_content = !empty($settings['apps_content']) ? esc_html($settings['apps_content']) : '';
 
-		$listItems_groups = !empty( $settings['listItems_groups'] ) ? $settings['listItems_groups'] : '';
+	    $listItems_groups = !empty($settings['listItems_groups']) ? $settings['listItems_groups'] : [];
 
-		$title = $apps_title ? '<h3 class="apps-title">'.esc_html($apps_title).'</h3>' : '';
-		$subtitle = $apps_subtitle ? '<h5>'.esc_html($apps_subtitle).'</h5>' : '';
-		$content = $apps_content ? '<p>'.esc_html($apps_content).'</p>' : '';
+	    $title = $apps_title ? '<h3 class="apps-title">' . $apps_title . '</h3>' : '';
+	    $subtitle = $apps_subtitle ? '<h5>' . $apps_subtitle . '</h5>' : '';
+	    $content = $apps_content ? '<p>' . $apps_content . '</p>' : '';
 
-		$output = '<div class="nacep-get-apps">
-								'.$subtitle.$title.$content;
-								// Group Param Output
-								if ( is_array( $listItems_groups ) && !empty( $listItems_groups ) ) {
-									$output .= '<div class="nacep-btn-wrap">';
-								  foreach ( $listItems_groups as $each_list ) {
-								  $btn_style = !empty( $each_list['btn_style'] ) ? $each_list['btn_style'] : '';
-								  $image_style = !empty( $each_list['image_style'] ) ? $each_list['image_style'] : '';
-								  $retina_img = !empty( $each_list['retina_img'] ) ? $each_list['retina_img'] : '';
+	    $output = '<div class="nacep-get-apps">' . $subtitle . $title . $content;
 
-									$google_image = !empty( $each_list['google_image']['url'] ) ? $each_list['google_image']['url'] : '';
-									$apple_image = !empty( $each_list['apple_image']['url'] ) ? $each_list['apple_image']['url'] : '';
-									$chrome_image = !empty( $each_list['chrome_image']['url'] ) ? $each_list['chrome_image']['url'] : '';
-									$btn_image = !empty( $each_list['btn_image']['url'] ) ? $each_list['btn_image']['url'] : '';
+	    // Group Param Output
+	    if (is_array($listItems_groups) && !empty($listItems_groups)) {
+	        $output .= '<div class="nacep-btn-wrap">';
+	        foreach ($listItems_groups as $each_list) {
+	            $btn_style = !empty($each_list['btn_style']) ? esc_attr($each_list['btn_style']) : '';
+	            $image_style = !empty($each_list['image_style']) ? esc_attr($each_list['image_style']) : '';
+	            $retina_img = !empty($each_list['retina_img']) ? $each_list['retina_img'] : '';
 
-								  $btn_icon = !empty( $each_list['btn_icon'] ) ? $each_list['btn_icon'] : '';
-								  $btn_text = !empty( $each_list['btn_text'] ) ? $each_list['btn_text'] : '';
-								  $btn_link = !empty( $each_list['btn_link'] ) ? $each_list['btn_link'] : '';
+	            $google_image = !empty($each_list['google_image']['url']) ? esc_url($each_list['google_image']['url']) : '';
+	            $apple_image = !empty($each_list['apple_image']['url']) ? esc_url($each_list['apple_image']['url']) : '';
+	            $chrome_image = !empty($each_list['chrome_image']['url']) ? esc_url($each_list['chrome_image']['url']) : '';
+	            $btn_image = !empty($each_list['btn_image']['url']) ? esc_url($each_list['btn_image']['url']) : '';
 
-									$link_url = !empty( $btn_link['url'] ) ? esc_url($btn_link['url']) : '';
-									$link_external = !empty( $btn_link['is_external'] ) ? 'target="_blank"' : '';
-									$link_nofollow = !empty( $btn_link['nofollow'] ) ? 'rel="nofollow"' : '';
-									$link_attr = !empty( $btn_link['url'] ) ?  $link_external.' '.$link_nofollow : '';
+	            $btn_icon = !empty($each_list['btn_icon']) ? esc_attr($each_list['btn_icon']) : '';
+	            $btn_text = !empty($each_list['btn_text']) ? esc_html($each_list['btn_text']) : '';
+	            $btn_link = !empty($each_list['btn_link']) ? $each_list['btn_link'] : '';
 
-									$btn_icon = $btn_icon ? ' <i class="'.esc_attr($btn_icon).'" aria-hidden="true"></i>' : '';
+	            $link_url = !empty($btn_link['url']) ? esc_url($btn_link['url']) : '';
+	            $link_external = !empty($btn_link['is_external']) ? 'target="_blank"' : '';
+	            $link_nofollow = !empty($btn_link['nofollow']) ? 'rel="nofollow"' : '';
+	            $link_attr = !empty($btn_link['url']) ? $link_external . ' ' . $link_nofollow : '';
 
-									if ($image_style === 'chrome') {
-										$image_url = $chrome_image ? $chrome_image : '';
-									} elseif ($image_style === 'apple') {
-										$image_url = $apple_image ? $apple_image : '';
-									} elseif ($image_style === 'btn') {
-										$image_url = $btn_image ? $btn_image : '';
-									} else {
-										$image_url = $google_image ? $google_image : '';
-									}
+	            $btn_icon_html = $btn_icon ? ' <i class="' . $btn_icon . '" aria-hidden="true"></i>' : '';
 
-									if ($image_url){
-							      list($width, $height, $type, $attr) = getimagesize($image_url);
-							    } else {
-							      $width = '';
-							      $height = '';
-							    }
-									if ($image_url && $retina_img) {
-							      $logo_width = $width/2;
-							      $logo_height = $height/2;
-							    } else {
-							      $logo_width = '';
-							      $logo_height = '';
-							    }
-							    $logo_width = $logo_width ? 'max-width: '.nacharity_core_check_px($logo_width).';' : '';
-									$logo_height = $logo_height ? 'max-height: '.nacharity_core_check_px($logo_height).';' : '';
+	            // Determine image URL based on style
+	            switch ($image_style) {
+	                case 'chrome':
+	                    $image_url = $chrome_image;
+	                    break;
+	                case 'apple':
+	                    $image_url = $apple_image;
+	                    break;
+	                case 'btn':
+	                    $image_url = $btn_image;
+	                    break;
+	                default:
+	                    $image_url = $google_image;
+	                    break;
+	            }
 
-									$image = $image_url ? '<img src="'.esc_url($image_url).'" alt="'.esc_html( 'Get Apps', 'charity-addon-for-elementor' ).'" style="'.esc_attr($logo_width).' '.esc_attr($logo_height).'">' : '';
+	            // Get image dimensions
+	            if ($image_url) {
+	                list($width, $height) = getimagesize($image_url);
+	            } else {
+	                $width = $height = '';
+	            }
 
-									if ($btn_style === 'two') {
-										$style_class = '';
-										$btn = $image;
-										$icon = '';
-									} elseif ($btn_style === 'three') {
-										$style_class = 'nacep-link';
-										$btn = $btn_text;
-										$icon = $btn_icon;
-									} else {
-										$style_class = 'nacep-btn';
-										$btn = $btn_text;
-										$icon = $btn_icon;
-									}
+	            // Calculate logo dimensions for retina
+	            if ($image_url && $retina_img) {
+	                $logo_width = $width / 2;
+	                $logo_height = $height / 2;
+	            } else {
+	                $logo_width = $logo_height = '';
+	            }
 
-								  $output .= '<a href="'.esc_url($link_url).'" '.$link_attr.' class="'.esc_attr($style_class).'"style="'.esc_attr($logo_width).' '.esc_attr($logo_height).'">'.$btn.$icon.'</a>';
-									}
-									$output .= '</div>';
-								}
-	$output .= '</div>';
-		echo $output;
+	            // Prepare style attributes
+	            $logo_width = $logo_width ? 'max-width: ' . nacharity_core_check_px($logo_width) . ';' : '';
+	            $logo_height = $logo_height ? 'max-height: ' . nacharity_core_check_px($logo_height) . ';' : '';
 
+	            // Generate image HTML
+	            $image = $image_url ? '<img src="' . esc_url($image_url) . '" alt="' . esc_attr__('Get Apps', 'charity-addon-for-elementor') . '" style="' . esc_attr($logo_width) . ' ' . esc_attr($logo_height) . '">' : '';
+
+	            // Determine button style and class
+	            switch ($btn_style) {
+	                case 'two':
+	                    $style_class = '';
+	                    $btn = $image;
+	                    $icon = '';
+	                    break;
+	                case 'three':
+	                    $style_class = 'nacep-link';
+	                    $btn = $btn_text;
+	                    $icon = $btn_icon_html;
+	                    break;
+	                default:
+	                    $style_class = 'nacep-btn';
+	                    $btn = $btn_text;
+	                    $icon = $btn_icon_html;
+	                    break;
+	            }
+
+	            // Create button link
+	            $output .= '<a href="' . $link_url . '" ' . $link_attr . ' class="' . esc_attr($style_class) . '" style="' . esc_attr($logo_width) . ' ' . esc_attr($logo_height) . '">' . $btn . $icon . '</a>';
+	        }
+	        $output .= '</div>'; // Close button wrap
+	    }
+	    
+	    $output .= '</div>'; // Close main div
+	    echo $output;
 	}
 
 }

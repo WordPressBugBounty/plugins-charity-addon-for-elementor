@@ -453,35 +453,43 @@ class Charity_Elementor_Addon_Video extends Widget_Base{
 	 * Written in PHP and used to generate the final HTML.
 	*/
 	protected function render() {
-		$settings = $this->get_settings_for_display();
-		$need_title = !empty( $settings['need_title'] ) ? $settings['need_title'] : '';
-		$btn_animation = !empty( $settings['btn_animation'] ) ? $settings['btn_animation'] : '';
-		$bg_image = !empty( $settings['bg_image']['id'] ) ? $settings['bg_image']['id'] : '';
-		$video_link = !empty( $settings['video_link'] ) ? $settings['video_link'] : '';
-		$video_title = !empty( $settings['video_title'] ) ? $settings['video_title'] : '';
+	    $settings = $this->get_settings_for_display();
+	    $need_title = !empty($settings['need_title']) ? $settings['need_title'] : '';
+	    $btn_animation = !empty($settings['btn_animation']) ? $settings['btn_animation'] : '';
+	    $bg_image = !empty($settings['bg_image']['id']) ? $settings['bg_image']['id'] : '';
+	    $video_link = !empty($settings['video_link']) ? $settings['video_link'] : '';
+	    $video_title = !empty($settings['video_title']) ? $settings['video_title'] : '';
 
-		// Video
-		$image_url = wp_get_attachment_url( $bg_image );
+	    $image_url = wp_get_attachment_url($bg_image);
+	    $image = $image_url ? '<img src="' . esc_url($image_url) . '" alt="Video">' : '';
+	    $title = $video_title ? '<span class="video-label">' . esc_html($video_title) . '</span>' : '';
+	    $animation = $btn_animation ? '<span class="nacep-ripple"></span>' : '';
 
-		$image = $image_url ? '<img src="'.esc_url($image_url).'" alt="Video">' : '';
+	    if ($need_title) {
+	        $video = $video_link 
+	            ? '<a href="' . esc_url($video_link) . '" class="nacep-popup-video">
+	                   <span class="nacep-video-btn-wrap">
+	                       <span class="nacep-video-btn">
+	                           <i class="fa fa-play" aria-hidden="true"></i>' . $animation . '
+	                       </span>' . $title . '
+	                   </span>
+	               </a>' 
+	            : '';
+	    } else {
+	        $video = $video_link 
+	            ? '<a href="' . esc_url($video_link) . '" class="nacep-video-btn nacep-popup-video">
+	                   <i class="fa fa-play" aria-hidden="true"></i>' . $animation . '
+	               </a>' 
+	            : '';
+	    }
 
-		$title = $video_title ? '<span class="video-label">'.esc_html($video_title).'</span>' : '';
-		if ($btn_animation) {
-			$animation = '<span class="nacep-ripple"></span>';
-		} else {
-			$animation = '';
-		}
+	    $output = '<div class="nacep-video-wrap">
+	                   <div class="nacep-image" style="background-image: url(' . esc_url($image_url) . ');">
+	                       ' . $image . $video . '
+	                   </div>
+	               </div>';
 
-		if ($need_title) {
-			$video = $video_link ? '<a href="'.esc_url($video_link).'" class="nacep-popup-video"><span class="nacep-video-btn-wrap"><span class="nacep-video-btn"><i class="fa fa-play" aria-hidden="true"></i>'.$animation.'</span>'.$title.'</span></a>' : '';
-		} else {
-			$video = $video_link ? '<a href="'.esc_url($video_link).'" class="nacep-video-btn nacep-popup-video"><i class="fa fa-play" aria-hidden="true"></i>'.$animation.'</a>' : '';
-		}
-
-  	$output = '<div class="nacep-video-wrap"><div class="nacep-image" style="background-image: url('.$image_url.');">'.$image.$video.'</div></div>';
-
-	  echo $output;
-
+	    echo $output;
 	}
 
 }

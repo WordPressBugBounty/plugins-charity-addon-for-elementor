@@ -764,58 +764,55 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 		 * Written in PHP and used to generate the final HTML.
 		*/
 		protected function render() {
-			$settings = $this->get_settings_for_display();
-			$donor_style 				= !empty( $settings['donor_style'] ) ? $settings['donor_style'] : '';
-			$donors_per_page 	= !empty( $settings['donors_per_page'] ) ? $settings['donors_per_page'] : '';
-			$form_id 				= !empty( $settings['form_id'] ) ? $settings['form_id'] : '';
-			$orderby 	= !empty( $settings['orderby'] ) ? $settings['orderby'] : '';
-			$order 		= !empty( $settings['order'] ) ? $settings['order'] : '';
-			$columns 	= !empty( $settings['columns'] ) ? $settings['columns'] : '';
-			$anonymous 	= !empty( $settings['anonymous'] ) ? $settings['anonymous'] : '';
-			$show_avatar 	= !empty( $settings['show_avatar'] ) ? $settings['show_avatar'] : '';
-			$show_name 		= !empty( $settings['show_name'] ) ? $settings['show_name'] : '';
-			$show_total = !empty( $settings['show_total'] ) ? $settings['show_total'] : '';
-			$show_time  = !empty( $settings['show_time'] ) ? $settings['show_time'] : '';
-			$only_comments  = !empty( $settings['only_comments'] ) ? $settings['only_comments'] : '';
-			$show_comments  = !empty( $settings['show_comments'] ) ? $settings['show_comments'] : '';
-			$comment_length = !empty( $settings['comment_length'] ) ? $settings['comment_length'] : '';
-			$readmore_text = !empty( $settings['readmore_text'] ) ? $settings['readmore_text'] : '';
-			$loadmore_text = !empty( $settings['loadmore_text'] ) ? $settings['loadmore_text'] : '';
+		    $settings = $this->get_settings_for_display();
+		    $donor_style = !empty($settings['donor_style']) ? $settings['donor_style'] : '';
+		    $donors_per_page = !empty($settings['donors_per_page']) ? $settings['donors_per_page'] : '';
+		    $form_id = !empty($settings['form_id']) ? $settings['form_id'] : '';
+		    $orderby = !empty($settings['orderby']) ? $settings['orderby'] : '';
+		    $order = !empty($settings['order']) ? $settings['order'] : '';
+		    $columns = !empty($settings['columns']) ? $settings['columns'] : '';
+		    $anonymous = !empty($settings['anonymous']) ? $settings['anonymous'] : '';
+		    $show_avatar = !empty($settings['show_avatar']) ? $settings['show_avatar'] : '';
+		    $show_name = !empty($settings['show_name']) ? $settings['show_name'] : '';
+		    $show_total = !empty($settings['show_total']) ? $settings['show_total'] : '';
+		    $show_time = !empty($settings['show_time']) ? $settings['show_time'] : '';
+		    $only_comments = !empty($settings['only_comments']) ? $settings['only_comments'] : '';
+		    $show_comments = !empty($settings['show_comments']) ? $settings['show_comments'] : '';
+		    $comment_length = !empty($settings['comment_length']) ? $settings['comment_length'] : '';
+		    $readmore_text = !empty($settings['readmore_text']) ? $settings['readmore_text'] : '';
+		    $loadmore_text = !empty($settings['loadmore_text']) ? $settings['loadmore_text'] : '';
 
-			$anonymous = $anonymous ? 'true' : 'false';
-			$show_avatar = $show_avatar ? 'true' : 'false';
-			$show_name = $show_name ? 'true' : 'false';
-			$show_total = $show_total ? 'true' : 'false';
-			$show_time = $show_time ? 'true' : 'false';
-			$only_comments = $only_comments ? 'true' : 'false';
-			$show_comments = $show_comments ? 'true' : 'false';
+		    $anonymous = $anonymous ? 'true' : 'false';
+		    $show_avatar = $show_avatar ? 'true' : 'false';
+		    $show_name = $show_name ? 'true' : 'false';
+		    $show_total = $show_total ? 'true' : 'false';
+		    $show_time = $show_time ? 'true' : 'false';
+		    $only_comments = $only_comments ? 'true' : 'false';
+		    $show_comments = $show_comments ? 'true' : 'false';
 
-			$donors_per_page = $donors_per_page ? ' donors_per_page="'.$donors_per_page.'"' : '';
-			$form_id 					 = $form_id ? ' form_id="'.implode(',', $form_id).'"' : '';
-			$orderby 				 = $orderby ? ' orderby="'.$orderby.'"' : '';
-			$order 					 = $order ? ' order="'.$order.'"' : '';
-			$columns 				 = $columns ? ' columns="'.$columns.'"' : '';
-			$anonymous 	 = $anonymous ? ' anonymous="'.$anonymous.'"' : '';
-			$show_avatar 	 = $show_avatar ? ' show_avatar="'.$show_avatar.'"' : '';
-			$show_name 		 = $show_name ? ' show_name="'.$show_name.'"' : '';
-			$show_total  = $show_total ? ' show_total="'.$show_total.'"' : '';
-			$show_time 	 = $show_time ? ' show_time="'.$show_time.'"' : '';
-			$only_comments 	 = $only_comments ? ' only_comments="'.$only_comments.'"' : '';
-			$show_comments 	 = $show_comments ? ' show_comments="'.$show_comments.'"' : '';
-			$comment_length  = $comment_length ? ' comment_length="'.$comment_length.'"' : '';
-			$readmore_text  = $readmore_text ? ' readmore_text="'.$readmore_text.'"' : '';
-			$loadmore_text  = $loadmore_text ? ' loadmore_text="'.$loadmore_text.'"' : '';
+		    $donors_per_page = $donors_per_page ? ' donors_per_page="' . esc_attr($donors_per_page) . '"' : '';
+		    $form_id = $form_id ? ' form_id="' . esc_attr(implode(',', $form_id)) . '"' : '';
+		    $orderby = $orderby ? ' orderby="' . esc_attr($orderby) . '"' : '';
+		    $order = $order ? ' order="' . esc_attr($order) . '"' : '';
+		    $columns = $columns ? ' columns="' . esc_attr($columns) . '"' : '';
+		    $anonymous = $anonymous ? ' anonymous="' . esc_attr($anonymous) . '"' : '';
+		    $show_avatar = $show_avatar ? ' show_avatar="' . esc_attr($show_avatar) . '"' : '';
+		    $show_name = $show_name ? ' show_name="' . esc_attr($show_name) . '"' : '';
+		    $show_total = $show_total ? ' show_total="' . esc_attr($show_total) . '"' : '';
+		    $show_time = $show_time ? ' show_time="' . esc_attr($show_time) . '"' : '';
+		    $only_comments = $only_comments ? ' only_comments="' . esc_attr($only_comments) . '"' : '';
+		    $show_comments = $show_comments ? ' show_comments="' . esc_attr($show_comments) . '"' : '';
+		    $comment_length = $comment_length ? ' comment_length="' . esc_attr($comment_length) . '"' : '';
+		    $readmore_text = $readmore_text ? ' readmore_text="' . esc_attr($readmore_text) . '"' : '';
+		    $loadmore_text = $loadmore_text ? ' loadmore_text="' . esc_attr($loadmore_text) . '"' : '';
 
-			if($donor_style == 'two') {
-				$style_cls = ' style-two';
-			} else {
-				$style_cls = '';
-			}
+		    $style_cls = ($donor_style == 'two') ? ' style-two' : '';
 
-	  	$output = '<div class="nacep-give-wall '.$style_cls.'">'.do_shortcode( '[give_donor_wall '. $donors_per_page . $form_id . $orderby . $order . $columns . $anonymous . $show_avatar . $show_name . $show_total . $show_time . $only_comments . $show_comments . $comment_length . $readmore_text . $loadmore_text .']' ).'</div>';
+		    $output = '<div class="nacep-give-wall ' . esc_attr($style_cls) . '">'
+		        . do_shortcode('[give_donor_wall' . $donors_per_page . $form_id . $orderby . $order . $columns . $anonymous . $show_avatar . $show_name . $show_total . $show_time . $only_comments . $show_comments . $comment_length . $readmore_text . $loadmore_text . ']')
+		        . '</div>';
 
-		  echo $output;
-
+		    echo wp_kses_post($output);
 		}
 
 	}

@@ -197,19 +197,20 @@ if ( is_plugin_active( 'charitable/charitable.php' ) ) {
 		 * Written in PHP and used to generate the final HTML.
 		*/
 		protected function render() {
-			$settings = $this->get_settings_for_display();
-			$display 							= !empty( $settings['display'] ) ? $settings['display'] : '';
-			$campaign 					= !empty( $settings['campaign'] ) ? $settings['campaign'] : '';
-			$goal 							= !empty( $settings['goal'] ) ? $settings['goal'] : '';
+		    $settings = $this->get_settings_for_display();
+		    $display = !empty($settings['display']) ? $settings['display'] : '';
+		    $campaign = !empty($settings['campaign']) ? $settings['campaign'] : '';
+		    $goal = !empty($settings['goal']) ? $settings['goal'] : '';
 
-			$display 		= $display ? ' display='.$display : '';
-			$campaign = $campaign ? ' campaign='.implode(',', $campaign) : '';
-			$goal 		= $goal ? ' goal='.$goal : '';
+		    $display = $display ? ' display="' . esc_attr($display) . '"' : '';
+		    $campaign = $campaign ? ' campaign="' . esc_attr(implode(',', $campaign)) . '"' : '';
+		    $goal = $goal ? ' goal="' . esc_attr($goal) . '"' : '';
 
-	  	$output = '<div class="nacep-charitable-stat">'.do_shortcode( '[charitable_stat'. $display . $campaign . $goal .']' ).'</div>';
+		    $output = '<div class="nacep-charitable-stat">'
+		        . do_shortcode('[charitable_stat' . $display . $campaign . $goal . ']')
+		        . '</div>';
 
-		  echo $output;
-
+		    echo wp_kses_post($output);
 		}
 
 	}

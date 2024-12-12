@@ -335,33 +335,28 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 		 * Written in PHP and used to generate the final HTML.
 		*/
 		protected function render() {
-			$settings = $this->get_settings_for_display();
-			$price 	= !empty( $settings['price'] ) ? $settings['price'] : '';
-			$donor 	= !empty( $settings['donor'] ) ? $settings['donor'] : '';
-			$date 	= !empty( $settings['date'] ) ? $settings['date'] : '';
-			$payment_method 	= !empty( $settings['payment_method'] ) ? $settings['payment_method'] : '';
-			$payment_id 	= !empty( $settings['payment_id'] ) ? $settings['payment_id'] : '';
-			$company_name 	= !empty( $settings['company_name'] ) ? $settings['company_name'] : '';
+		    $settings = $this->get_settings_for_display();
+		    $price = !empty($settings['price']) ? $settings['price'] : '';
+		    $donor = !empty($settings['donor']) ? $settings['donor'] : '';
+		    $date = !empty($settings['date']) ? $settings['date'] : '';
+		    $payment_method = !empty($settings['payment_method']) ? $settings['payment_method'] : '';
+		    $payment_id = !empty($settings['payment_id']) ? $settings['payment_id'] : '';
+		    $company_name = !empty($settings['company_name']) ? $settings['company_name'] : '';
 
-			$price = $price ? 'true' : 'false';
-			$donor = $donor ? 'true' : 'false';
-			$date = $date ? 'true' : 'false';
-			$payment_method = $payment_method ? 'true' : 'false';
-			$payment_id = $payment_id ? 'true' : 'false';
-			$company_name = $company_name ? 'true' : 'false';
+		    $price = $price ? ' price="' . esc_attr($price) . '"' : '';
+		    $donor = $donor ? ' donor="' . esc_attr($donor) . '"' : '';
+		    $date = $date ? ' date="' . esc_attr($date) . '"' : '';
+		    $payment_method = $payment_method ? ' payment_method="' . esc_attr($payment_method) . '"' : '';
+		    $payment_id = $payment_id ? ' payment_id="' . esc_attr($payment_id) . '"' : '';
+		    $company_name = $company_name ? ' company_name="' . esc_attr($company_name) . '"' : '';
 
-			$price = $price ? ' price="'.$price.'"' : '';
-			$donor = $donor ? ' donor="'.$donor.'"' : '';
-			$date = $date ? ' date="'.$date.'"' : '';
-			$payment_method = $payment_method ? ' payment_method="'.$payment_method.'"' : '';
-			$payment_id = $payment_id ? ' payment_id="'.$payment_id.'"' : '';
-			$company_name = $company_name ? ' company_name="'.$company_name.'"' : '';
+		    $output = '<div class="nacep-give-receipt">'
+		        . do_shortcode('[give_receipt' . $price . $donor . $date . $payment_method . $payment_id . $company_name . ']')
+		        . '</div>';
 
-	  	$output = '<div class="nacep-give-receipt">'.do_shortcode( '[give_receipt'. $price . $donor . $date . $payment_method . $payment_id . $company_name .']' ).'</div>';
-
-		  echo $output;
-
+		    echo wp_kses_post($output);
 		}
+
 
 	}
 	Plugin::instance()->widgets_manager->register_widget_type( new Charity_Elementor_Addon_GIVE_Receipt() );

@@ -945,75 +945,56 @@ class Charity_Elementor_Addon_Separator extends Widget_Base{
 	 * Written in PHP and used to generate the final HTML.
 	*/
 	protected function render() {
-		$settings = $this->get_settings_for_display();
-		// Separator
-		$separator_style = !empty( $settings['separator_style'] ) ? $settings['separator_style'] : '';
-		$separator_border_style = !empty( $settings['separator_border_style'] ) ? $settings['separator_border_style'] : '';
-		$separator_type = !empty( $settings['separator_type'] ) ? $settings['separator_type'] : '';
-		$separator_text = !empty( $settings['separator_text'] ) ? $settings['separator_text'] : '';
-		$separator_icon = !empty( $settings['separator_icon'] ) ? $settings['separator_icon'] : '';
-		$icon_alignment = !empty( $settings['icon_alignment'] ) ? $settings['icon_alignment'] : '';
-		$icon_position = !empty( $settings['icon_position'] ) ? $settings['icon_position'] : '';
-		$section_alignment = !empty( $settings['section_alignment'] ) ? $settings['section_alignment'] : '';
-		$choose_image = !empty( $settings['choose_image']['id'] ) ? $settings['choose_image']['id'] : '';
+	    $settings = $this->get_settings_for_display();
 
-		$image_url = wp_get_attachment_url( $choose_image );
-		$separator_image = $image_url ? '<img src="'.esc_url($image_url).'" width="162" alt="'.esc_html( 'Separator', 'charity-addon-for-elementor' ).'">' : '';
+	    // Separator settings with proper escaping
+	    $separator_style = !empty($settings['separator_style']) ? sanitize_text_field($settings['separator_style']) : '';
+	    $separator_border_style = !empty($settings['separator_border_style']) ? sanitize_text_field($settings['separator_border_style']) : '';
+	    $separator_type = !empty($settings['separator_type']) ? sanitize_text_field($settings['separator_type']) : '';
+	    $separator_text = !empty($settings['separator_text']) ? esc_html($settings['separator_text']) : '';
+	    $separator_icon = !empty($settings['separator_icon']) ? '<i class="' . esc_attr($settings['separator_icon']) . '"></i>' : '';
+	    $icon_alignment = !empty($settings['icon_alignment']) ? sanitize_text_field($settings['icon_alignment']) : '';
+	    $icon_position = !empty($settings['icon_position']) ? sanitize_text_field($settings['icon_position']) : '';
+	    $section_alignment = !empty($settings['section_alignment']) ? sanitize_text_field($settings['section_alignment']) : '';
+	    $choose_image = !empty($settings['choose_image']['id']) ? intval($settings['choose_image']['id']) : '';
 
-		$separator_text = $separator_text ? esc_html($separator_text) : '';
-		$separator_icon = $separator_icon ? '<i class="'.esc_attr($separator_icon).'"></i>' : '';
+	    // Image URL
+	    $image_url = $choose_image ? wp_get_attachment_url($choose_image) : '';
+	    $separator_image = $image_url ? '<img src="' . esc_url($image_url) . '" width="162" alt="' . esc_attr__('Separator', 'charity-addon-for-elementor') . '">' : '';
 
-		if ($separator_type === 'text'){
-		  $separator = $separator_text;
-		} elseif ($separator_type === 'image'){
-		  $separator = $separator_image;
-		} else {
-		  $separator = $separator_icon;
-		}
+	    // Determine the separator content based on type
+	    if ($separator_type === 'text') {
+	        $separator = $separator_text;
+	    } elseif ($separator_type === 'image') {
+	        $separator = $separator_image;
+	    } else {
+	        $separator = $separator_icon;
+	    }
 
-		if ($icon_alignment === 'left') {
-			$align_class = ' left-separator';
-		} elseif ($icon_alignment === 'right') {
-			$align_class = ' right-separator';
-		} else {
-			$align_class = '';
-		}
+	    // Add alignment classes
+	    $align_class = $icon_alignment === 'left' ? ' left-separator' : ($icon_alignment === 'right' ? ' right-separator' : '');
+	    $pos_class = $icon_position === 'top' ? ' icon-top' : ($icon_position === 'bottom' ? ' icon-bottom' : '');
+	    $salign_class = $section_alignment === 'left' ? ' separator-left' : ($section_alignment === 'right' ? ' separator-right' : '');
 
-		if ($icon_position === 'top') {
-			$pos_class = ' icon-top';
-		} elseif ($icon_position === 'bottom') {
-			$pos_class = ' icon-bottom';
-		} else {
-			$pos_class = '';
-		}
+	    // Add border style classes
+	    if ($separator_border_style === 'two') {
+	        $border_class = ' border-two';
+	        $border_lsub_class = 'sep-two-left';
+	        $border_rsub_class = 'sep-two-right';
+	    } else {
+	        $border_class = '';
+	        $border_lsub_class = 'sep-left';
+	        $border_rsub_class = 'sep-right';
+	    }
 
-		if ($section_alignment === 'left') {
-			$salign_class = ' separator-left';
-		} elseif ($section_alignment === 'right') {
-			$salign_class = ' separator-right';
-		} else {
-			$salign_class = '';
-		}
+	    // Generate output
+	    $output = '<div class="nacep-separator' . esc_attr($align_class . $salign_class . $pos_class . $border_class) . '">';
+	    if ($separator_style !== 'two') {
+	        $output .= '<span class="' . esc_attr($border_lsub_class) . '"></span><div class="nacep-sep">' . $separator . '</div><span class="' . esc_attr($border_rsub_class) . '"></span>';
+	    }
+	    $output .= '</div>';
 
-		if ($separator_border_style === 'two') {
-			$border_class = ' border-two';
-			$border_lsub_class = 'sep-two-left';
-			$border_rsub_class = 'sep-two-right';
-		} else {
-			$border_class = '';
-			$border_lsub_class = 'sep-left';
-			$border_rsub_class = 'sep-right';
-		}
-
-		$output = '<div class="nacep-separator'.$align_class.$salign_class.$pos_class.$border_class.'">';
-							if ($separator_style === 'two') {
-							} else {
-			          $output .= '<span class="'.$border_lsub_class.'"></span><div class="nacep-sep">'.$separator.'</div><span class="'.$border_rsub_class.'"></span>';
-							}
-    $output .= '</div>';
-
-		echo $output;
-
+	    echo $output;
 	}
 
 }

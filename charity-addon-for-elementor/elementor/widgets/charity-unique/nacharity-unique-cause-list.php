@@ -1436,39 +1436,39 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 		 * Written in PHP and used to generate the final HTML.
 		*/
 		protected function render() {
-			$settings = $this->get_settings_for_display();
-			$cause_style 				= !empty( $settings['cause_style'] ) ? $settings['cause_style'] : '';
-			$cause_col 				= !empty( $settings['cause_col'] ) ? $settings['cause_col'] : '';
-			$cause_limit 				= !empty( $settings['cause_limit'] ) ? $settings['cause_limit'] : '';
-			$cause_order 				= !empty( $settings['cause_order'] ) ? $settings['cause_order'] : '';
-			$cause_orderby 				= !empty( $settings['cause_orderby'] ) ? $settings['cause_orderby'] : '';
-			$cause_show_category 				= !empty( $settings['cause_show_category'] ) ? $settings['cause_show_category'] : [];
-			$cause_show_id 				= !empty( $settings['cause_show_id'] ) ? $settings['cause_show_id'] : '';
-			$cause_pagination 				= !empty( $settings['cause_pagination'] ) ? $settings['cause_pagination'] : '';
-			$goal_title 				= !empty( $settings['goal_title'] ) ? $settings['goal_title'] : '';
-			$donor_title 				= !empty( $settings['donor_title'] ) ? $settings['donor_title'] : '';
+			$settings 			= $this->get_settings_for_display();
+			$cause_style 		= !empty( $settings['cause_style'] ) ? $settings['cause_style'] : '';
+			$cause_col 			= !empty( $settings['cause_col'] ) ? $settings['cause_col'] : '';
+			$cause_limit 		= !empty( $settings['cause_limit'] ) ? $settings['cause_limit'] : '';
+			$cause_order 		= !empty( $settings['cause_order'] ) ? $settings['cause_order'] : '';
+			$cause_orderby 		= !empty( $settings['cause_orderby'] ) ? $settings['cause_orderby'] : '';
+			$cause_show_category 	= !empty( $settings['cause_show_category'] ) ? $settings['cause_show_category'] : [];
+			$cause_show_id 		= !empty( $settings['cause_show_id'] ) ? $settings['cause_show_id'] : '';
+			$cause_pagination 	= !empty( $settings['cause_pagination'] ) ? $settings['cause_pagination'] : '';
+			$goal_title 		= !empty( $settings['goal_title'] ) ? $settings['goal_title'] : '';
+			$donor_title 		= !empty( $settings['donor_title'] ) ? $settings['donor_title'] : '';
 			$raised_title       = !empty( $settings['raised_title'] ) ? $settings['raised_title'] : '';
 			$donated_text       = !empty( $settings['donated_text'] ) ? $settings['donated_text'] : '';
-			$donation_text       = !empty( $settings['donation_text'] ) ? $settings['donation_text'] : '';
+			$donation_text      = !empty( $settings['donation_text'] ) ? $settings['donation_text'] : '';
 
-			$remaing_title 				= !empty( $settings['remaing_title'] ) ? $settings['remaing_title'] : '';
-			$btn_text 				= !empty( $settings['btn_text'] ) ? $settings['btn_text'] : '';
-			$btn_icon 				= !empty( $settings['btn_icon'] ) ? $settings['btn_icon'] : '';
-			$icon = $btn_icon ? ' <i class="'.$btn_icon.'" aria-hidden="true"></i>' : '';
+			$remaing_title 		= !empty( $settings['remaing_title'] ) ? $settings['remaing_title'] : '';
+			$btn_text 			= !empty( $settings['btn_text'] ) ? $settings['btn_text'] : '';
+			$btn_icon 			= !empty( $settings['btn_icon'] ) ? $settings['btn_icon'] : '';
+			$icon 				= $btn_icon ? ' <i class="'.esc_attr( $btn_icon ).'" aria-hidden="true"></i>' : '';
 
-			$bar_color 				= !empty( $settings['bar_color'] ) ? $settings['bar_color'] : '';
+			$bar_color 			= !empty( $settings['bar_color'] ) ? $settings['bar_color'] : '';
 			$bar_fill_color 	= !empty( $settings['bar_fill_color'] ) ? $settings['bar_fill_color'] : '';
-			$reverse 				  = !empty( $settings['reverse'] ) ? $settings['reverse'] : '';
-			$size 						= !empty( $settings['size'] ) ? $settings['size'] : '';
-			$thickness 						= !empty( $settings['thickness'] ) ? $settings['thickness'] : '';
-			$start_angle 						= !empty( $settings['start_angle'] ) ? $settings['start_angle'] : '';
+			$reverse 			= !empty( $settings['reverse'] ) ? $settings['reverse'] : '';
+			$size 				= !empty( $settings['size'] ) ? $settings['size'] : '';
+			$thickness 			= !empty( $settings['thickness'] ) ? $settings['thickness'] : '';
+			$start_angle 		= !empty( $settings['start_angle'] ) ? $settings['start_angle'] : '';
 
-			$bar_color = $bar_color ? ' data-color="'.$bar_color.'"' : '';
-			$bar_fill_color = $bar_fill_color ? ' data-fill="'.$bar_fill_color.'"' : '';
-			$reverse = $reverse ? ' data-reverse="true"' : ' data-reverse="false"';
-			$size = $size ? ' data-size="'.$size.'"' : '';
-			$thickness = $thickness ? ' data-thickness="'.$thickness.'"' : '';
-			$start_angle = $start_angle ? ' data-start="'.$start_angle.'"' : '';
+			$bar_color 			= $bar_color ? ' data-color="'.esc_attr($bar_color).'"' : '';
+			$bar_fill_color 	= $bar_fill_color ? ' data-fill="'.esc_attr($bar_fill_color).'"' : '';
+			$reverse 			= $reverse ? ' data-reverse="true"' : ' data-reverse="false"';
+			$size 				= $size ? ' data-size="'.esc_attr($size).'"' : '';
+			$thickness 			= $thickness ? ' data-thickness="'.esc_attr($thickness).'"' : '';
+			$start_angle 		= $start_angle ? ' data-start="'.esc_attr($start_angle).'"' : '';
 
 			if ($cause_style === 'two') {
 				$style_cls = ' style-two';
@@ -1521,23 +1521,23 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 			}
 
 	    if ($cause_show_id) {
-				$cause_show_id = json_encode( $cause_show_id );
-				$cause_show_id = str_replace(array( '[', ']' ), '', $cause_show_id);
-				$cause_show_id = str_replace(array( '"', '"' ), '', $cause_show_id);
-	      $cause_show_id = explode(',',$cause_show_id);
+			$cause_show_id = json_encode( $cause_show_id );
+			$cause_show_id = str_replace(array( '[', ']' ), '', $cause_show_id);
+			$cause_show_id = str_replace(array( '"', '"' ), '', $cause_show_id);
+	      	$cause_show_id = explode(',',$cause_show_id);
 	    } else {
-	      $cause_show_id = '';
+	      	$cause_show_id = '';
 	    }
 
 	    $cas_args = array(
-			  'paged' => $my_page,
-			  'post_type' => 'give_forms',
-			  'posts_per_page' => (int)$cause_limit,
-			  'category_name' => implode(',', $cause_show_category),
-			  'orderby' => $cause_orderby,
-			  'order' => $cause_order,
-	      'post__in' => $cause_show_id,
-			);
+		  	'paged' => $my_page,
+		  	'post_type' => 'give_forms',
+		  	'posts_per_page' => (int)$cause_limit,
+		  	'category_name' => implode(',', $cause_show_category),
+		  	'orderby' => $cause_orderby,
+		  	'order' => $cause_order,
+	      	'post__in' => $cause_show_id,
+		);
 
     $nacep_cas = new \WP_Query( $cas_args ); ?>
   	<div class="nacep-give-cause-list<?php echo esc_attr($style_cls); ?>">
@@ -1698,7 +1698,7 @@ if ( is_plugin_active( 'give/give.php' ) ) {
 						<?php if ($large_image) { ?>
 						  <div class="nacep-image">
 						    <a href="<?php echo esc_url( get_permalink() ); ?>"><img src="<?php echo esc_url($large_image); ?>" alt="<?php echo esc_attr(get_the_title()); ?>"></a>
-						    <p class="donation-count"><?php echo $donor_count.$donation_text; ?></p>
+						    <p class="donation-count"><?php echo esc_html($donor_count.$donation_text); ?></p>
 						  </div>
 						<?php } ?>
 						<div class="cause-info">
